@@ -1,0 +1,311 @@
+@import "../../services/scss/variable";
+
+.auth_wrapper {
+    overflow-x: hidden;
+
+    background: url("../../services/images/Bg1.png") no-repeat right top;
+    background-size: cover;
+    height: 100vh;
+    width: 100vw;
+
+    .getHelp {
+        position: fixed;
+        left: auto;
+        right: 100px;
+        top: 70px;
+
+        color: $white;
+        font-family: helveticaNeueExtraLight;
+        font-size: 18px;
+        letter-spacing: 2px;
+        font-weight: 100;
+
+        b {
+            font-family: helveticaNeueBold;
+            font-weight: 900;
+            color: currentcolor;
+            cursor: pointer;
+        }
+    }
+
+    .authFromWrapperBG {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        padding: 0 100px;
+
+        .authFromWrapper {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+
+            background-color: $white;
+            // margin-top: 50px;
+            border-radius: 20px;
+            min-height: 80vh;
+            width: 100%;
+            padding: 0 50px;
+
+            .logo {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                flex-direction: column;
+                padding-top: 20px;
+
+                form {
+                    // width: 100%;
+                    border: none !important;
+                    a {
+                        color: $black33;
+                    }
+                    .required {
+                        color: $redF4;
+                    }
+                    label {
+                        margin-top: 20px;
+                        &:first-child {
+                            margin-top: 0;
+                        }
+                    }
+                    input {
+                        background-color: transparent !important;
+                        height: 55px;
+                        &::after,
+                        &::before,
+                        &:focus,
+                        &:hover,
+                        &:active {
+                            content: "";
+                            background-color: transparent !important;
+                        }
+                    }
+                    .inputPassword {
+                        position: relative;
+                        .iconPassEye {
+                            position: absolute;
+                            top: 36px;
+                            left: auto;
+                            right: 20px;
+                        }
+                    }
+                    .submitBtn {
+                        border-radius: 10px;
+                        background-color: $redF4;
+                        font-weight: 600;
+                        padding: 10px;
+                        text-transform: capitalize !important;
+                        font-size: 18px;
+                    }
+                    .loginBtn{
+                        background-color: transparent;
+                        color: $black33;
+                        border: 1.5px solid $greyCC;
+                    }
+                    .doNotAcc {
+                        text-align: center;
+                        margin: 20px 0;
+                        a {
+                            font-weight: 900;
+                            color: $redF4;
+                            b {
+                                color: $redF4;
+                            }
+                        }
+                    }
+                    input {
+                        width: 100%;
+                        transition: all 0.6s ease;
+                        border: 1.5px solid $greyCC;
+                        border-radius: 10px;
+                        padding: 10px 20px;
+                        margin: 10px 0;
+                    }
+                    ::placeholder {
+                        color: $greyCC;
+                        font-family: helveticaNeueExtraLight !important;
+                        letter-spacing: 1px;
+                    }
+                }
+            }
+            .AuthFooter {
+                padding-bottom: 15px;
+            }
+        }
+    }
+    .authContentWrapperBG {
+        display: flex;
+        align-items: center;
+        // justify-content: center;
+        min-height: 100vh;
+
+        .authContentWrapper {
+            max-width: 515px;
+
+            h1 {
+                color: $white;
+                font-size: 80px;
+                margin: 0;
+                padding: 0;
+                line-height: 80px;
+            }
+            p {
+                margin: 40px 0;
+                color: $white;
+                font-size: 18px;
+                font-family: helveticaNeueExtraLight;
+                font-weight: 100;
+                letter-spacing: 1px;
+                margin-bottom: 100px;
+            }
+            .slick-dots {
+                right: 0;
+                justify-content: start;
+                margin: 0;
+                li {
+                    width: 13px;
+                    height: 13px;
+
+                    button {
+                        width: 10px;
+                        height: 10px;
+                        border-radius: 100px;
+                    }
+                }
+                .slick-active {
+                    button {
+                        background-color: $redF4;
+                    }
+                }
+            }
+        }
+    }
+}
+.helpModalCard > div {
+    padding: 0;
+}
+.helpModalCard > div:last-child {
+    padding: 0;
+}
+.helpModalCard {
+    border-radius: 20px !important;
+    background-color: $redF4 !important;
+    color: $white !important;
+
+    h1 {
+        color: $white !important;
+        margin: 0;
+    }
+}
+.colorWhite {
+    color: $white !important;
+    svg {
+        height: 50px;
+        width: 50px;
+        color: $white !important;
+        path,
+        line {
+            color: $white !important;
+        }
+    }
+}
+.helpContent {
+    background-color: $white;
+    padding: 20px !important;
+
+    b {
+        font-size: 20px;
+        font-weight: 900;
+        font-family: helveticaNeueBold;
+        margin-bottom: 15px;
+        display: block;
+    }
+    span {
+        display: block;
+        font-size: 20px;
+        margin-bottom: 15px;
+    }
+    .content {
+        margin-bottom: 150px;
+    }
+}
+
+// for search
+@media screen and (max-width: 1501px) {
+    .authFromWrapperBG {
+        padding: 0 40px !important;
+    }
+}
+
+@media screen and (max-width: 1200px) {
+    .auth_wrapper {
+        .authFromWrapperBG {
+            padding-top: 50px;
+        }
+    }
+    .authContentWrapperBG {
+        justify-content: center;
+        min-height: 65vh !important;
+    }
+    .getHelpNone {
+        display: none !important;
+    }
+    .getHelpBlock {
+        display: flex !important;
+        justify-content: center;
+
+        b {
+            color: $white;
+            padding: 20px 0 0 0;
+        }
+    }
+}
+
+@media screen and (max-width: 568px) {
+    .auth_wrapper {
+        .formColumn {
+            flex-direction: column;
+        }
+        .authFromWrapperBG {
+            padding: 0 !important;
+            padding-top: 50px;
+            .authFromWrapper {
+                // width: 90% !important;
+                padding: 0 20px;
+                input {
+                    display: flex;
+                    max-width: 100% !important;
+                }
+                .logo {
+                    img {
+                        width: 200px !important;
+                    }
+                }
+            }
+        }
+    }
+    .authContentWrapperBG {
+        justify-content: center;
+
+        .authContentWrapper {
+            width: 90% !important;
+            h1 {
+                font-size: 40px !important;
+                line-height: 40px !important;
+            }
+            p {
+                margin-bottom: 50px !important;
+            }
+        }
+    }
+}
+
+@media screen and (max-height: 768px) {
+    .authFromWrapperBG {
+        .authFromWrapper {
+            margin: 40px 0 !important;
+        }
+    }
+}

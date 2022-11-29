@@ -1,0 +1,104 @@
+@import "../../services/scss/variable";
+
+.screenParentCrdWrp {
+    .btnGrp {
+        width: 100%;
+        padding-top: 10px;
+        display: flex;
+        justify-content: flex-end;
+    }
+}
+.screenCrdWrp {
+    margin-bottom: 20px;
+    .cmnBox {
+        border-radius: 20px;
+        height: 100%;
+        // padding: 0 25px;
+    }
+    .contentArea {
+        background-color: $paper;
+        border: 1px solid $greyCC;
+        padding: 10px;
+        min-height: 65vh;
+
+        .content_wrp {
+            p {
+                margin: 0;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+
+                background-color: $greyDB;
+                padding: 15px;
+                border: 1px solid $greyCC;
+                border-radius: 10px;
+                margin-bottom: 10px;
+
+                &:last-child {
+                    margin-bottom: 0;
+                }
+            }
+            // .active {
+            //     border: 1px solid $redF4;
+            // }
+        }
+    }
+
+    .previewImg {
+        img {
+            border-radius: 10px;
+            max-height: 295px;
+        }
+    }
+}
+
+.insertDesign {
+    min-width: 150px;
+    padding: 0 10px;
+    p {
+        margin: 0;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        min-height: 40px;
+
+        svg {
+            margin-right: 5px;
+        }
+    }
+    .paddingLeft {
+        padding-left: 10px;
+    }
+    .smSvg {
+        svg {
+            width: 25px !important;
+            height: 25px !important;
+        }
+    }
+}
+.topInsertHeader {
+    width: 100%;
+    overflow: auto;
+    display: flex;
+    margin-bottom: 20px;
+
+
+    .extraBtnGrp {
+        display: flex;
+        button {
+            padding: 0 20px;
+        }
+    }
+}
+
+@media screen and (max-width: 468px) {
+    .previewImg {
+        .btnGrp {
+            flex-direction: column;
+            div,
+            button {
+                width: 100% !important;
+            }
+        }
+    }
+}

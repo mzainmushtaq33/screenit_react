@@ -1,0 +1,136 @@
+@import "../../../services/scss/variable";
+
+.custom-main-btn {
+    margin-bottom: 5px !important;
+
+    min-width: 150px !important;
+    min-height: 45px !important;
+
+    text-transform: capitalize !important;
+    border-radius: 8px !important;
+    box-shadow: none;
+    background-color: $redF4 !important;
+    border: 2px solid $redF4 !important;
+    color: $white !important;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font: normal normal 900 20px/25px helveticaNeue !important;
+    letter-spacing: 1px !important;
+    padding: 10px 15px;
+
+    // font-family: fontMedium;
+    svg {
+        color: $white;
+        margin-right: 5px;
+
+        path,
+        circle,
+        line,
+        polyline {
+            color: $white;
+        }
+    }
+
+    &:hover {
+        background-color: transparent !important;
+        color: $redF4 !important;
+        
+        svg {
+            margin-right: 5px;
+            color: $redF4;
+            path,
+            circle,
+            line,
+            polyline {
+                color: $redF4;
+            }
+        }
+    }
+}
+.largeBtn {
+    padding: 10px 15px !important;
+    font-size: 20px !important;
+    font-weight: bold;
+}
+
+.outlinedBtn {
+    color: $redF4 !important;
+    background-color: transparent !important;
+    // font-family: fontMedium;
+    svg {
+        margin-right: 5px;
+        color: $redF4;
+        path,
+        line,
+        circle,
+        polyline {
+            color: $redF4;
+        }
+    }
+
+    &:hover {
+        margin-right: 5px;
+        background-color: $redF4 !important;
+        color: $white !important;
+        svg {
+            color: $white;
+            path,
+            line,
+            circle,
+            polyline {
+                color: $white;
+            }
+        }
+    }
+}
+
+.outlinedDark {
+    color: $black3F !important;
+    background-color: transparent !important;
+    border: 2px solid $black3F !important;
+
+    svg {
+        margin-right: 5px;
+        color: $black3F;
+        path,
+        line,
+        circle,
+        polyline {
+            color: $black3F;
+        }
+    }
+
+    &:hover {
+        background-color: $greyCC !important;
+        color: $black3F !important;
+        svg {
+            margin-right: 5px;
+            color: $black3F;
+            path,
+            line,
+            circle,
+            polyline {
+                color: $black3F;
+            }
+        }
+    }
+}
+
+.btnTransparent {
+    background-color: transparent !important;
+    border: none !important;
+    padding: 0;
+    min-width: auto !important;
+    svg {
+        margin-right: 5px;
+        color: $black3F;
+        path,
+        line,
+        circle,
+        polyline {
+            color: $black3F;
+        }
+    }
+}

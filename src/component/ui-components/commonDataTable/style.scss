@@ -1,0 +1,179 @@
+@import "../../../services/scss/variable";
+
+#cmnDataTableMain {
+    margin: 0px;
+    .searchParent {
+        display: flex;
+        align-items: center;
+
+        .ant-input-affix-wrapper {
+            box-shadow: 0px 1px 3px $greyDB;
+            border: none;
+        }
+    }
+    .toggleBtn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 100%;
+        // margin: 10px 0;
+    }
+    .searchFilter {
+        display: flex;
+        .input_parent {
+            width: 100%;
+        }
+    }
+    .filterBtn {
+        margin-left: 20px;
+        background-color: $white;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+        box-shadow: 0px 1px 3px $greyDB;
+        padding: 3px;
+    }
+    .btnGrpParent {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end !important;
+
+        button {
+            display: flex;
+            align-items: center;
+
+            margin: 0;
+            padding: 6.4px 10px;
+
+            &::after {
+                content: "";
+                outline: none !important;
+                box-shadow: none !important;
+                border: none !important;
+            }
+
+            &:last-child {
+                margin: 0 10px;
+                margin-right: 0;
+                padding: 3px 20px;
+            }
+
+            svg {
+                width: 35px;
+                height: 35px;
+                color: $greyCC;
+                clipPath,
+                path,
+                rect {
+                    color: $greyCC;
+                }
+            }
+        }
+        .active {
+            color: $black00;
+            clipPath,
+            path,
+            rect {
+                color: $black00;
+            }
+        }
+        .gridBtn {
+            border: none;
+            background-color: transparent;
+            box-shadow: none;
+        }
+        .cmmBtm {
+            display: flex;
+            align-items: center;
+        }
+    }
+
+    .gridParent {
+        // margin-top: 20px;
+        background-color: $white;
+        box-shadow: 0px 1px 3px $greyDB;
+        padding: 0 30px;
+        border-radius: 20px;
+        min-height: 78vh;
+        .checkmark {
+            top: 0;
+        }
+        .itemParent {
+            margin-bottom: 20px;
+        }
+    }
+    .tableParent {
+        margin-top: 20px;
+    }
+
+    .titleName {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+}
+
+@media screen and (max-width: 1199px) {
+    #cmnDataTableMain {
+        .toggleBtn {
+            width: 100% !important;
+            justify-content: flex-end !important;
+        }
+    }
+}
+
+@media screen and (max-width: 899px) {
+    #cmnDataTableMain {
+        .toggleBtn {
+            height: 100%;
+            width: auto !important;
+            justify-content: flex-start !important;
+            .parent {
+                flex-direction: column;
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 599px) {
+    #cmnDataTableMain {
+        .toggleBtn {
+            .parent {
+                flex-direction: row;
+            }
+        }
+        .btnGrpParent {
+            justify-content: flex-start !important;
+
+            .cmmBtm {
+                svg {
+                    width: 30px;
+                    height: 30px;
+                }
+                button {
+                    font-size: 16px !important;
+                    padding: 0 16px;
+
+                    &:first-child {
+                        padding: 0;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 425px) {
+    #cmnDataTableMain {
+        .gridParent {
+            padding: 10px;
+            .cardParent {
+                margin-top: 0 !important;
+                margin-bottom: 0 !important;
+            }
+        }
+    }
+}

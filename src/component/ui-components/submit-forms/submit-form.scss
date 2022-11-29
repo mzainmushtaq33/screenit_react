@@ -1,0 +1,74 @@
+@import "../../../services/scss/variable";
+
+.formCheckBox {
+    div {
+        background-color: transparent;
+    }
+    fieldset {
+        border: none;
+    }
+    p {
+        display: flex;
+        min-width: 280px;
+        padding: 0;
+        margin: 0;
+    }
+}
+// .ant-select-dropdown {
+//     background-color: #29314f !important;
+//     color: #e0e0e0;
+// }
+.ant-select-selection-search {
+    background-color: transparent;
+}
+.ant-select-arrow {
+    padding-right: 10px;
+}
+.ant-select-clear {
+    svg {
+        position: absolute;
+        top: -4px;
+        left: -7px;
+    }
+}
+
+.submitFormSelect {
+    .ant-select-selector {
+        height: 40px !important;
+        border-radius: 5px !important;
+
+        .ant-select-selection-overflow {
+            overflow: auto;
+            height: 100%;
+        }
+    }
+}
+
+.inputFileUpload {
+    // overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    position: relative;
+    div {
+        padding: 0;
+    }
+    input {
+        opacity: 0;
+        // background-color: red;
+        // position: relative;
+    }
+    .fileNameTypo {
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+        width: 120px;
+    }
+}
+
+.fromSubmitBtn {
+    background-color: $redF4 !important;
+}
+.fromSubmitBtnNone {
+    display: none !important;
+}

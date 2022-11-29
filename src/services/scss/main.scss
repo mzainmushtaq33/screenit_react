@@ -1,0 +1,109 @@
+@import "./variable";
+@import "./common";
+@import "./media";
+@import "./globalStyle.scss";
+@import "antd/dist/antd.css";
+
+@font-face {
+  font-family: helveticaNeue;
+  src: url(../fonts/HelveticaNeueLight.ttf);
+}
+
+@font-face {
+  font-family: helveticaNeueExtraLight;
+  src: url(../fonts/HelveticaNeue.ttf);
+}
+
+@font-face {
+  font-family: helveticaNeueMedium;
+  src: url(../fonts/HelveticaNeueMedium.ttf);
+}
+
+@font-face {
+  font-family: helveticaNeueBold;
+  src: url(../fonts/HelveticaNeuBold.ttf);
+}
+
+.ant-select-dropdown {
+  z-index: 1300;
+  // border-radius: 20px;
+}
+
+.fontExLight {
+  font-family: helveticaNeueExtraLight;
+}
+.fontLight {
+  font-family: helveticaNeue;
+}
+.fontMedium {
+  font-family: helveticaNeueMedium;
+}
+.fontBold {
+  font-family: helveticaNeueBold;
+}
+
+.mainFS16 {
+  font-size: 16px !important;
+}
+
+.mainFS14 {
+  font-size: 14px !important;
+}
+.mainFS18 {
+  font-size: 18px;
+}
+
+.inputCross {
+  display: flex;
+  align-items: center;
+  svg {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+.spanStyle {
+  font-size: 15px !important;
+}
+.divStyle {
+  font-weight: 900;
+  font-family: helveticaNeueBold;
+}
+.minHeight {
+  min-height: 82vh;
+}
+.text-center {
+  text-align: center;
+}
+
+.d-block {
+  display: block;
+}
+.text-capitalize {
+  text-transform: capitalize !important;
+}
+
+.position-relative {
+  position: relative;
+  .imgIconEye {
+    position: absolute;
+    background-color: $paper;
+    border-radius: 100%;
+    width: 45px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    left: 20px;
+    top: 20px;
+
+    svg {
+      color: $redF4;
+      line,
+      path,
+      circle {
+        color: $redF4;
+      }
+    }
+  }
+}

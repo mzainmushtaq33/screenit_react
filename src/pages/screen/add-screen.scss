@@ -1,0 +1,168 @@
+@import "../../services/scss/variable";
+
+.screenCrdWrp {
+    margin-bottom: 20px;
+    .cmnBox {
+        border-radius: 20px;
+        height: 100%;
+        // padding: 0 25px;
+    }
+    .checkBoxArea {
+        background-color: $paper;
+        box-shadow: 0px 1px 3px #00000029;
+        padding: 25px;
+
+        .checkBoxWrp {
+            margin-bottom: 20px;
+            b {
+                margin-bottom: 5px;
+                display: block;
+            }
+            .checkBoxParent {
+                width: 100%;
+                overflow: auto;
+
+                table {
+                    td:first-child {
+                        min-width: 190px;
+                    }
+                }
+                label {
+                    display: flex;
+                    // min-width: 160px;
+                    margin-bottom: 10px;
+                }
+                span {
+                    display: block;
+                    margin-left: 10px;
+                    font-size: 18px;
+                }
+
+                /* The container */
+                .chkContainer {
+                    display: flex;
+                    align-items: center;
+                    // justify-content: center;
+
+                    position: relative;
+                    padding-left: 35px;
+                    cursor: pointer;
+                    font-size: 22px;
+                    -webkit-user-select: none;
+                    -moz-user-select: none;
+                    -ms-user-select: none;
+                    user-select: none;
+
+                    p {
+                        margin: 0;
+                        margin-left: 10px;
+                        font-size: 17px;
+                        margin-top: 5px;
+                    }
+                    span {
+                        margin: 0;
+                    }
+                }
+                .chkContainer input {
+                    position: absolute;
+                    opacity: 0;
+                    cursor: pointer;
+                    height: 0;
+                    width: 0;
+                }
+                .checkmark {
+                    position: absolute;
+                    top: 5px;
+                    left: 0;
+                    height: 27px;
+                    width: 27px;
+                    border: 2px solid $greyCC;
+                }
+                .chkContainer input:checked ~ .checkmark {
+                    // background-color: $redF4;
+                    border: 2px solid $redF4;
+                }
+                .checkmark:after {
+                    content: "";
+                    position: absolute;
+                    display: block;
+                }
+                .chkContainer input:checked ~ .checkmark:after {
+                    display: block;
+                }
+                .chkContainer .checkmark:after {
+                    left: 7px;
+                    top: 2px;
+                    width: 10px;
+                    height: 15px;
+                    border: solid $greyCC;
+                    border-width: 0 3px 3px 0;
+                    -webkit-transform: rotate(45deg);
+                    -ms-transform: rotate(45deg);
+                    transform: rotate(45deg);
+                }
+                .chkContainer input:checked ~ .checkmark:after {
+                    left: 7px;
+                    top: 2px;
+                    width: 10px;
+                    height: 15px;
+                    border: solid $redF4;
+                    border-width: 0 3px 3px 0;
+                    -webkit-transform: rotate(45deg);
+                    -ms-transform: rotate(45deg);
+                    transform: rotate(45deg);
+                }
+            }
+            .dragDropSec {
+                margin-top: 20px;
+                background-color: $white;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                border-radius: 20px;
+                border: 1px solid $greyCC;
+                height: 220px;
+            }
+        }
+    }
+    .widgetImgParent {
+        display: flex;
+        .widgetImg {
+            &:first-child {
+                margin-right: 15px;
+            }
+            img {
+                width: 130px;
+                border-radius: 10px;
+            }
+        }
+    }
+    .previewImg {
+        // padding: 20px 0 0 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        height: 100%;
+
+        img {
+            border-radius: 10px;
+        }
+        .btnGrp {
+            padding-top: 10px;
+            display: flex;
+            justify-content: flex-end;
+        }
+    }
+}
+
+@media screen and (max-width: 468px) {
+    .previewImg {
+        .btnGrp {
+            flex-direction: column;
+            div,
+            button {
+                width: 100% !important;
+            }
+        }
+    }
+}

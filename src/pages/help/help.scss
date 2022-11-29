@@ -1,0 +1,51 @@
+@import "../../services/scss/variable";
+
+#helpMain {
+    .helpCrdWrp {
+        margin-bottom: 20px;
+
+        .cmnBox {
+            background-color: $white;
+            border-radius: 20px;
+            box-shadow: 0px 1px 3px $greyDB;
+            height: 100%;
+            padding: 30px;
+        }
+        .subCard {
+            background-color: transparent;
+            box-shadow: none;
+            min-height: 45vh;
+        }
+
+        .submitTicket {
+            svg {
+                display: flex;
+                width: 200px;
+                height: 200px;
+                color: $greyCC;
+                path,
+                circle,
+                line {
+                    color: $greyCC;
+                }
+            }
+        }
+        .btnGrp {
+            button {
+                display: flex;
+                /* UI Properties */
+                background: #f4364c 0% 0% no-repeat padding-box;
+                font-weight: 900;
+                font-family: helveticaNeueMedium;
+                box-shadow: 0px 1px 3px $greyDB;
+                border-radius: 20px;
+                opacity: 1;
+                color: $white;
+                width: 100%;
+                margin-top: 20px;
+                padding: 20px 0;
+                text-transform: capitalize;
+            }
+        }
+    }
+}

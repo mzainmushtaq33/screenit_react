@@ -1,0 +1,111 @@
+@import "../../../services/scss/main.scss";
+
+.table_parent {
+    box-shadow: 0 1px 3px $greyCC;
+    border-radius: 20px;
+    background-color: $white !important;
+    img{
+        border-radius: 10px;
+    }
+}
+.table_headline {
+    th {
+        background-color: $greyCC !important;
+        font: normal normal 900 20px/25px helveticaNeueMedium !important;
+    }
+    tr {
+        td {
+            border-bottom: 1.5px solid $greyCC;
+            font: normal normal 600 20px/24px helveticaNeue !important;
+
+            .checkmark {
+                top: -10px;
+            }
+        }
+    }
+}
+.overflow-auto {
+    overflow: auto;
+}
+.w-100 {
+    width: 100%;
+}
+
+.table_edit_button {
+    border: none;
+    padding: 0%;
+    margin: 0;
+    text-align: center;
+    svg {
+        color: green;
+    }
+}
+.table_del_button {
+    border: none;
+    padding: 0%;
+    margin: 0;
+    text-align: center;
+    svg {
+        color: $redF4;
+    }
+}
+
+::-webkit-scrollbar {
+    width: 5px;
+    height: 2px;
+}
+
+.ant-pagination-simple {
+    padding: 10px 20px;
+    display: flex;
+    align-self: center;
+    .ant-pagination-simple-pager {
+        input {
+            border: none;
+            background-color: transparent;
+            color: $redF4;
+            padding: 0;
+            margin: 0;
+        }
+        padding-right: 10px;
+    }
+    .ant-pagination-slash {
+        padding: 0 5px 0 0;
+        margin: 0;
+    }
+}
+.cmn_prev_next {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    svg {
+        width: 25px;
+        margin: 0 10px;
+        color: $greyCC;
+        path {
+            color: $greyCC;
+        }
+    }
+}
+
+@media screen and (min-width: 1192px) {
+    .table_parent {
+        height: 700px;
+        .table_headline {
+            height: 100%;
+            .ant-spin-nested-loading {
+                height: 100%;
+                .ant-spin-container {
+                    height: 100%;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: space-between;
+
+                    .ant-pagination-simple {
+                        width: 100%;
+                    }
+                }
+            }
+        }
+    }
+}

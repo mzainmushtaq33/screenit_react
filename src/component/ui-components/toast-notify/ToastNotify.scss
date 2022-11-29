@@ -1,0 +1,19 @@
+.toastMain {
+    .commonParent {
+        max-width: 300px;
+
+        .notify_box {
+            display: flex;
+            align-items: center;
+        }
+    }
+    .successParent {
+        background-color: #66c27d;
+    }
+    .errorParent {
+        background-color: #f4364c;
+    }
+    .message {
+        color: #f2f2f2;
+    }
+}
