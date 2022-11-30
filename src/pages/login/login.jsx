@@ -35,7 +35,6 @@ const Login = () => {
     // from submit
 
     const handleSubmitValue = async (e) => {
-        console.log(e);
         const data = {
             email: e.email,
             password: e.password

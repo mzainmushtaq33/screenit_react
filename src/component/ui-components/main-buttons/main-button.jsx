@@ -1,7 +1,7 @@
 import React from 'react';
 import { Box, Button } from '@mui/material';
 import './main-button.scss';
-const MainButton = ({ btnText, icon, clickHandler = () => { }, wdt, variant, disabled }) => {
+const MainButton = ({ btnText, icon, clickHandler = () => { }, wdt, variant, disabled ,type}) => {
 
 
     return (
@@ -11,6 +11,7 @@ const MainButton = ({ btnText, icon, clickHandler = () => { }, wdt, variant, dis
                 className={`custom-main-btn ${variant}`}
                 sx={{ width: wdt, opacity: disabled ? 0.6 : 1 }}
                 onClick={(e) => clickHandler(e)}
+                type={type}
             >
                 {icon ? icon : ''} {btnText}
             </Button>
