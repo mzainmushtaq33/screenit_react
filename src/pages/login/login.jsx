@@ -9,9 +9,17 @@ import { Link } from 'react-router-dom';
 import { DASHBOARD, FORGOT_PASS, REGISTER } from '../../routes/slug';
 import { PostData } from '../../services/axios/https';
 import * as api from '../../services/axios/api';
+import { useLoginMutation } from '../../reduxToolKit/authentication/authService';
+import { ToastMessage } from '../../utils/toastMessage/ToastMessage';
+import { useNavigate } from "react-router-dom";
+
+
 
 const Login = () => {
     const theme = useTheme();
+    
+    const [authLoginSend] = useLoginMutation()
+    const navigate = useNavigate();
 
     const [showPassword, setShowPassword] = React.useState(false);
     const [checkedA, setCheckedA] = React.useState(true);
@@ -27,12 +35,19 @@ const Login = () => {
     // from submit
 
     const handleSubmitValue = async (e) => {
-        // console.log(e);
-        let post = await PostData(`${api.USER_LOGIN}`, e, true);
+        console.log(e);
+        const data = {
+            email: e.email,
+            password: e.password
+        }
+
+       const response = await authLoginSend(data)
+       ToastMessage(response?.data?.success || response?.error?.data?.success,response?.data?.message || response?.error?.data?.message)
+        // let post = await PostData(`${api.USER_LOGIN}`, e, true);
    
-        if (post) {
-            localStorage.setItem("screenItOnInfo", JSON.stringify(post?.data?.data));
-            window.location.href = DASHBOARD;
+        if (response?.data?.success ) {
+            localStorage.setItem("screenItOnInfo", JSON.stringify(response?.data?.data));
+            navigate(`${DASHBOARD}`)
         }
     }
 
