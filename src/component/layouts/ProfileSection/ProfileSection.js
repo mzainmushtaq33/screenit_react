@@ -47,6 +47,7 @@ import { ToastMessage } from "../../../utils/toastMessage/ToastMessage.js";
 const ProfileSection = () => {
   const theme = useTheme();
   const navigate = useNavigate();
+  const userInfoLocal = JSON.parse(localStorage.getItem("screenItOnInfo"))
 
   const [logoutRequest] = useLogoutMutation()
 
@@ -117,7 +118,7 @@ const ProfileSection = () => {
               stroke={1.5}
               size="1.5rem"
             />
-            <span className="dNoneMobile">Admin</span>
+            <span className="dNoneMobile">{userInfoLocal?.name}</span>
             <IconChevronDown
               stroke={1.5}
               size="1.5rem"
