@@ -47,18 +47,18 @@ const [userAddressEditRequest] = useUserAddressEditMutation();
   return (
     <div className=" ">
       <Row gutter={[24, 24]}>
-        {/* {containShippingAddress && (
+        {containShippingAddress === "shipping address" && (
           <Col md={24}>
             <Row>
               <Col md={12}>
                 <CheckboxComponent label="Same as billing address" />
               </Col>
-              <Col md={12} className="justify_content_end ">
+              {/* <Col md={12} className="justify_content_end ">
                 <MainButton btnText="Delete" variant="outlinedBtn" />
-              </Col>
+              </Col> */}
             </Row>
           </Col>
-        )} */}
+        )}
 
         <Col md={24}>
           {/* <FormGenerator formData={formGenerator} /> */}
