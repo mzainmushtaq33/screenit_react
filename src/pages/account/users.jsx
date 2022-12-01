@@ -3,6 +3,8 @@ import CommonDataTable from "../../component/ui-components/commonDataTable/commo
 import CheckboxComponent from "../../component/ui-components/formComponents/checkbox";
 import FormGenerator from "../../component/ui-components/formGenerator/formGenerator";
 import MainModal from "../../component/ui-components/main-modals/main-modal";
+import { Formik } from "formik";
+import * as Yup from "yup";
 
 export default function Users(props) {
   let [showModal, setShowModal] = useState(false);
@@ -50,6 +52,16 @@ export default function Users(props) {
       subscriptionType: "Standard",
     },
   ];
+  const handleSubmitValue = async (e,{ resetForm }) => {
+    // const response = await userSendDataRequest(e);
+    // ToastMessage(
+    //   response?.data?.success || response?.error?.data?.success,
+    //   response?.data?.message || response?.error?.data?.message
+    // );
+    // if(response?.data?.success){
+    //   // resetForm()
+    // }
+  };
   return (
     <div>
       <CommonDataTable
@@ -74,7 +86,60 @@ export default function Users(props) {
         titleText="User Details"
       >
         <div style={{ zIndex: 1000 }}>
-          <FormGenerator formData={formData} />
+        <Formik
+        initialValues={{
+          first_name: '' ,
+          last_name: '',
+          email: '',
+          password: '',
+          state: '',
+          city: '',
+          address_one: '',
+          address_two: '',
+          postal_code: '',
+          phone_no: '',
+        }}
+        validationSchema={Yup.object().shape({
+          first_name: Yup.string().max(255).required("First name is required"),
+          last_name: Yup.string().max(255).required("Last name is required"),
+          email: Yup.string().max(255).required("Email is required"),
+          password: Yup.string().max(255).required("Password is required"),
+          state: Yup.string().max(255).required("State is required"),
+          city: Yup.string("City is required")
+            .max(255)
+            .required("City is required"),
+          address_one: Yup.string()
+            .max(255)
+            .required("Address one is required"),
+          address_two: Yup.string()
+            .max(255)
+            .required("Address two is required"),
+          postal_code: Yup.string()
+            .max(255)
+            .required("Postal code is required"),
+          phone_no: Yup.string().max(255).required("Phone no is required"),
+        })}
+        onSubmit={handleSubmitValue}
+        className=""
+      >
+        {/* isSubmitting */}
+        {({
+          errors,
+          handleBlur,
+          handleChange,
+          handleSubmit,
+          touched,
+          values,
+        }) => (
+          <form noValidate onSubmit={handleSubmit}>
+          <FormGenerator formData={formData} handleChange={handleChange}
+              // setFieldValue={setFieldValue}
+              errors={errors}
+              touched={touched}
+              values={values}/>
+          </form>
+        )}
+      </Formik>
         </div>
       </MainModal>
     </div>
@@ -85,7 +150,7 @@ let formData = [
   {
     type: "input",
     label: "First Name",
-    key: "firstName",
+    key: "first_name",
     md: 12,
     required: true,
     placeholder: "Admin",
@@ -93,7 +158,7 @@ let formData = [
   {
     type: "input",
     label: "Last Name",
-    key: "lastName",
+    key: "last_name",
     md: 12,
     required: true,
     placeholder: "Admin",

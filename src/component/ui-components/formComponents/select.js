@@ -11,11 +11,15 @@ export default function SelectComponent({
   itemText = "",
   placeholder,
   onChange,
+  setFieldValue,
   label,
   labelStyle,
   errorMsg,
   className = "",
   required,
+  handleChange,
+  name,
+  value,
   ...args
 }) {
   return (
@@ -33,9 +37,11 @@ export default function SelectComponent({
               allowClear
               bordered={false}
               showSearch
+              name={name}
+              value={value}
               placeholder={placeholder ? placeholder : "Select"}
               optionFilterProp="children"
-              onChange={onChange}
+              onChange={(e) => setFieldValue(`${name}`,e)}
               filterOption={(input, option) =>
                 option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
               }

@@ -4,11 +4,15 @@ import InputComponent from "../../../component/ui-components/formComponents/inpu
 import SelectComponent from "../../../component/ui-components/formComponents/select";
 import MainButton from "../../../component/ui-components/main-buttons/main-button";
 import CheckboxComponent from "../formComponents/checkbox";
+import { FormControl, FormHelperText } from "@mui/material";
 
-export default function FormGenerator({ formData = [] }) {
+export default function FormGenerator({ formData = [],setFieldValue,handleChange,touched,errors,values }) {
+  // console.log('values :>> ', values);
+  
   return (
     <div>
-      <Row gutter={[24, 24]}>
+      
+              <Row gutter={[24, 24]}>
         {formData.map((component, index) => (
           <Col
             key={component.key}
@@ -21,12 +25,34 @@ export default function FormGenerator({ formData = [] }) {
             span={component.span ? component.span : 24}
           >
             {component.type === "input" ? (
+              <FormControl
+              fullWidth
+              error={Boolean(touched[component.key] && errors[component.key])}
+              sx={{}}
+            >
               <InputComponent
                 label={component.label}
                 required={component.required}
                 placeholder={component.placeholder}
+                handleChange={handleChange}
+                name= {component.key}
+                value={values[component.key]}
               />
+              {touched[component.key] && errors[component.key] && (
+                      <FormHelperText
+                        error
+                        id="standard-weight-helper-text-name-login"
+                      >
+                        {errors[component.key]}
+                      </FormHelperText>
+                    )}
+                  </FormControl>
             ) : component.type === "select" ? (
+              <FormControl
+              fullWidth
+              error={Boolean(touched[component.key] && errors[component.key])}
+              sx={{}}
+            >
               <SelectComponent
                 label={component.label}
                 required={component.required}
@@ -34,7 +60,20 @@ export default function FormGenerator({ formData = [] }) {
                 itemText={component.itemText}
                 itemValue={component.itemValue}
                 placeholder={component.placeholder}
+                handleChange={handleChange}
+                name={component.key}
+                value= {values[component.key]}
+                setFieldValue={setFieldValue}
               />
+              {touched[component.key] && errors[component.key] && (
+                      <FormHelperText
+                        error
+                        id="standard-weight-helper-text-name-login"
+                      >
+                        {errors[component.key]}
+                      </FormHelperText>
+                    )}
+                  </FormControl>
             ) : component.type === "checkbox" ? (
               <CheckboxComponent
                 label={component.label}
@@ -45,10 +84,11 @@ export default function FormGenerator({ formData = [] }) {
         ))}
         <Col md={24}>
           <div className=" flex justify_content_end ">
-            <MainButton btnText="Save" />
+            <MainButton btnText="Save" type="submit"/>
           </div>
         </Col>
       </Row>
+           
     </div>
   );
 }
