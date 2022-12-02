@@ -7,7 +7,7 @@ export default function CustomTab({
   destroyInactiveTabPane = false,
 }) {
   let [activeKey, setActiveKey] = useState(
-    defaultActiveKey ? defaultActiveKey : tabArray[1]?.key
+    defaultActiveKey ? defaultActiveKey : tabArray[0]?.key
   );
 
   /* --------------------------- */
@@ -30,6 +30,7 @@ export default function CustomTab({
     <>
       {tabArray?.length > 0 && (
         <Tabs
+        style={{marginTop:'10px'}}
           defaultActiveKey={activeKey ? activeKey : tabArray[0]?.key}
           activeKey={activeKey}
           className=""

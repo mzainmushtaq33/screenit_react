@@ -47,15 +47,15 @@ const [userAddressEditRequest] = useUserAddressEditMutation();
   return (
     <div className=" ">
       <Row gutter={[24, 24]}>
-        {containShippingAddress && (
+        {containShippingAddress === "shipping address" && (
           <Col md={24}>
             <Row>
               <Col md={12}>
                 <CheckboxComponent label="Same as billing address" />
               </Col>
-              <Col md={12} className="justify_content_end ">
+              {/* <Col md={12} className="justify_content_end ">
                 <MainButton btnText="Delete" variant="outlinedBtn" />
-              </Col>
+              </Col> */}
             </Row>
           </Col>
         )}
@@ -72,12 +72,12 @@ const [userAddressEditRequest] = useUserAddressEditMutation();
           city: Yup.string("City is required")
             .max(255)
             .required("City is required"),
-          address_one: Yup.string()
-            .max(255)
-            .required("Address one is required"),
-          address_two: Yup.string()
-            .max(255)
-            .required("Address two is required"),
+          // address_one: Yup.string()
+          //   .max(255)
+          //   .required("Address one is required"),
+          // address_two: Yup.string()
+          //   .max(255)
+          //   .required("Address two is required"),
           postal_code: Yup.string()
             .max(255)
             .required("Postal code is required"),

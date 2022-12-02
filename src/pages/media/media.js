@@ -1,9 +1,13 @@
+import { Row, Col } from "antd";
 import React from "react";
 import CommonDataTable from "../../component/ui-components/commonDataTable/commonDataTable";
+import InputComponent from "../../component/ui-components/formComponents/input";
+import SelectComponent from "../../component/ui-components/formComponents/select";
 import MainModal from "../../component/ui-components/main-modals/main-modal";
 import CustomTab from "../../component/ui-components/tab/tab";
 import { img_v1 } from "../../services/svg/svg-icon";
 import ImageFile from "./image-file";
+
 
 export default function Media() {
   const [open, setOpen] = React.useState(false);
@@ -54,16 +58,22 @@ export default function Media() {
   }
   let tabArray = [
     {
-      name: "Image File",
+      name: "Media File",
       key: "imageFile",
       component: <ImageFile />,
     },
-    {
-      name: "Stock Image",
-      key: "stockImage",
-      component: <ImageFile />,
-    },
+    // {
+    //   name: "Stock Image",
+    //   key: "stockImage",
+    //   component: <ImageFile />,
+    // },
   ];
+  const mediaTypes = [
+    'Image',
+    'Audio',
+    'Video',
+    'Document'
+  ]
   return (
     <div>
       <CommonDataTable
@@ -84,6 +94,42 @@ export default function Media() {
         onCloseHandler={() => setOpen(false)}
         titleText="Upload Image Source"
       >
+         <Row gutter={[24, 24]}>
+         <Col
+        //  lg: 8,
+        //  md: 12,
+        //  sm: 24,
+            lg={8}
+            md={12}
+            sm={24}
+          >
+          <InputComponent
+                label="Title"
+                required={false}
+                placeholder="search"
+                // handleChange={handleChange}
+                // name= {component.key}
+                // value={values[component.key]}
+              />
+          </Col>
+
+          <Col
+          lg={10}
+          md={12}
+          sm={24}
+          >
+          <SelectComponent
+                label='Media Type'
+                required={false}
+                items={mediaTypes}
+                // itemText={component.itemText}
+                // itemValue={component.itemValue}
+                placeholder='Select'
+                // handleChange={handleChange}
+              />
+          </Col>
+        
+         </Row>
         <CustomTab tabArray={tabArray} />
       </MainModal>
     </div>
