@@ -27,7 +27,7 @@ const MultiImageUpload = ({
   const dispatch = useDispatch();
   const handleChange = (e) => {
     const Files = [e.target.files];
-    console.log("Files", Files);
+    console.log("Files in", Files);
     const FILES = [];
     Files.map((fileList, ind) => {
       const getArray = Object.values(fileList);

@@ -11,6 +11,7 @@ import ImageFile from "./image-file";
 
 export default function Media() {
   const [open, setOpen] = React.useState(false);
+  const [mediaValue, setMediaValue] = React.useState('Image');
 
   const headers = [
     { title: "S.No", dataIndex: "serialNo", align: 'center' },
@@ -60,7 +61,7 @@ export default function Media() {
     {
       name: "Media File",
       key: "imageFile",
-      component: <ImageFile />,
+      component: <ImageFile mediaName={mediaValue}/>,
     },
     // {
     //   name: "Stock Image",
@@ -68,12 +69,17 @@ export default function Media() {
     //   component: <ImageFile />,
     // },
   ];
+  // console.log('fieldValue', fieldValue)
   const mediaTypes = [
     'Image',
     'Audio',
     'Video',
     'Document'
   ]
+  const setFieldValue =(e,name) => {
+    // console.log('e,w', e,w)
+    setMediaValue(name)
+  }
   return (
     <div>
       <CommonDataTable
@@ -126,6 +132,8 @@ export default function Media() {
                 // itemValue={component.itemValue}
                 placeholder='Select'
                 // handleChange={handleChange}
+                setFieldValue={setFieldValue}
+                value={mediaValue}
               />
           </Col>
         

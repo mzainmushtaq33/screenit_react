@@ -1,11 +1,15 @@
 import React from "react";
 import MultiImageUpload from "../../component/ui-components/fileUpload/FileUpload";
+import VideoUpload from "../../component/ui-components/videoUpload/VideoUpload";
 
-const ImageFile = () => {
+const ImageFile = (mediaName) => {
+    // console.log('mediaName', mediaName)
     const checkFiles = (e) => {
-          console.log('e :>> ', e);
+          console.log('e images:>> ', e);
     }
   return (
+    <>
+    {mediaName?.mediaName === 'Image' &&
     <div>
       <p>
         Upload images from your device. Hold [Ctrl] or [Shift] to select
@@ -21,7 +25,30 @@ const ImageFile = () => {
           onChange={checkFiles}
         />
       {/* </div> */}
-    </div>
+    </div>}
+    {mediaName?.mediaName === 'Video' &&<div className="App_video">
+      {/* <h1>Video upload</h1> */}
+      <VideoUpload width={400} height={250} />
+    </div>}
+    {mediaName?.mediaName === 'Document' &&
+    <div>
+      <p>
+        Upload documents from your device. Hold [Ctrl] or [Shift] to select
+        multiple files. Maximum size allowed for files is 50MP.
+      </p>
+      {/* <div className="dragDropSec">
+        Drop Some Files Here or Click to Choose */}
+        <MultiImageUpload
+          maxSize={2}
+          accept={["application/pdf","text/csv","application/vnd.openxmlformats-officedocument.wordprocessingml.document"]}
+          defaultImages={[]}
+          maxFiles={3}
+          onChange={checkFiles}
+        />
+      {/* </div> */}
+    </div>}
+    </>
+    
   );
 };
 
