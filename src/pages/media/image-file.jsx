@@ -3,14 +3,15 @@ import AudioUpload from "../../component/ui-components/audioUpload/AudioUpload";
 import MultiImageUpload from "../../component/ui-components/fileUpload/FileUpload";
 import VideoUpload from "../../component/ui-components/videoUpload/VideoUpload";
 
-const ImageFile = (mediaName) => {
+const ImageFile = ({mediaName,setFiles}) => {
   // console.log('mediaName', mediaName)
   const checkFiles = (e) => {
-    console.log("e images:>> ", e);
+    console.log("e images:>> dfdf ", e);
+    setFiles(e)
   };
   return (
     <>
-      {mediaName?.mediaName === "Image" && (
+      {mediaName === "Image" && (
         <div>
           <p>
             Upload images from your device. Hold [Ctrl] or [Shift] to select
@@ -28,13 +29,13 @@ const ImageFile = (mediaName) => {
           {/* </div> */}
         </div>
       )}
-      {mediaName?.mediaName === "Video" && (
+      {mediaName === "Video" && (
         <div className="App_video">
           {/* <h1>Video upload</h1> */}
           <VideoUpload width={400} height={250} />
         </div>
       )}
-      {mediaName?.mediaName === "Document" && (
+      {mediaName === "Document" && (
         <div>
           <p>
             Upload documents from your device. Hold [Ctrl] or [Shift] to select
@@ -56,7 +57,7 @@ const ImageFile = (mediaName) => {
           {/* </div> */}
         </div>
       )}
-      {mediaName?.mediaName === "Audio" && (
+      {mediaName === "Audio" && (
         <div className="App_audio">
           {/* <h1>Video upload</h1> */}
           <AudioUpload width={400} height={250} />
