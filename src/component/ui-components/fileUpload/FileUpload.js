@@ -19,6 +19,7 @@ const MultiImageUpload = ({
       src: src,
       typeError: "",
       sizeError: "",
+      status: null,
       name: "",
     });
   });
@@ -34,18 +35,22 @@ const MultiImageUpload = ({
       getArray?.map((file) => {
         let typeError = "",
           sizeError = "";
+          let status;
 
         if (accept.includes(file.type) === false) {
           typeError = `Invalid format`;
+          status = true;
         }
         if (file.size / 1024 / 1024 > maxSize) {
           sizeError = `Size Limit: 2MB `;
+          status = true;
         }
 
         FILES.push({
           file: file,
           typeError: typeError,
           sizeError: sizeError,
+          status: status,
           name: file.name,
         });
       });
@@ -78,6 +83,7 @@ const MultiImageUpload = ({
           src: URL.createObjectURL(file?.file),
           typeError: file?.typeError,
           sizeError: file?.sizeError,
+          status: file.status,
           name: file?.name,
         });
         //

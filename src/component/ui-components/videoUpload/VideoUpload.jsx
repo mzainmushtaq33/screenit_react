@@ -1,7 +1,8 @@
-import React from "react";
+import React,{useState} from "react";
 
 export default function VideoUpload(props) {
-  const { width, height } = props;
+  const { width, height,onChange } = props;
+  const [error, setError ] = useState({})
 
   const inputRef = React.useRef();
 
@@ -9,8 +10,18 @@ export default function VideoUpload(props) {
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
+    console.log('file :>> ', file);
     const url = URL.createObjectURL(file);
     setSource(url);
+    // onChange([file])
+    let sizeInKb = file.size /1000 
+    const totalSizeInKb = 500*1024;
+    if(sizeInKb<= totalSizeInKb){
+      onChange([file])
+    }else{
+         setError({err: 'Minimum size is 500MB',status:true})
+         onChange({err: 'Minimum size is 500MB',status:true})
+    }
   };
 
   const handleChoose = (event) => {
@@ -36,6 +47,7 @@ export default function VideoUpload(props) {
           src={source}
         />
       )}
+      {error&&<div style={{ color: "red" }}>{error?.err}</div>}
       {/* <div className="VideoInput_footer">{source || "Nothing selectd"}</div> */}
     </div>
   );

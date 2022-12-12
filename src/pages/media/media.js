@@ -116,19 +116,20 @@ const myBucket = new AWS.S3({
     files.forEach(file => {
       myBucket.upload({
         Bucket: 'screen-ot-it',
-        Key: file.name,
-        Body: file.file
+        Key: `${mediaValue}/${file.name}`,
+        Body: (mediaValue === 'Audio' || mediaValue === 'Video'  )? file : file.file
       }, (err, data) => {
         if (err) {
           console.error('Error uploading file:', err);
           ToastMessage(false,'Error uploading file:')
         } else {
           console.log('Successfully uploaded file:', data);
-          ToastMessage(true,`Successfully uploaded file:${data?.key}`)
+          ToastMessage(true,`Successfully uploaded file:${data && data?.key}`)
         }
       });
     });
   };
+  console.log('mediaValue :>> ', mediaValue);
   return (
     <div>
       <CommonDataTable
@@ -194,7 +195,7 @@ const myBucket = new AWS.S3({
               alignItems: "end",
             }}
           >
-            <MainButton clickHandler={handleUpload} btnText="upload" />
+            <MainButton clickHandler={handleUpload} btnText="upload" disabled={(files.status || files.some(item => item.status === true))? true : false}/>
           </Col>
         </Row>
         <CustomTab tabArray={tabArray} />

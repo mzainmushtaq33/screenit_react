@@ -32,7 +32,7 @@ const ImageFile = ({mediaName,setFiles}) => {
       {mediaName === "Video" && (
         <div className="App_video">
           {/* <h1>Video upload</h1> */}
-          <VideoUpload width={400} height={250} />
+          <VideoUpload width={400} height={250} onChange={checkFiles}/>
         </div>
       )}
       {mediaName === "Document" && (
@@ -60,7 +60,7 @@ const ImageFile = ({mediaName,setFiles}) => {
       {mediaName === "Audio" && (
         <div className="App_audio">
           {/* <h1>Video upload</h1> */}
-          <AudioUpload width={400} height={250} />
+          <AudioUpload width={400} height={250} onChange={checkFiles}/>
         </div>
       )}
     </>
