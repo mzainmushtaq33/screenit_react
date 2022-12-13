@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import ReactAudioPlayer from "react-audio-player";
+import upload from "../../../services/images/upload.png";
 
 export default function AudioUpload(props) {
-  const { width, height,onChange } = props;
+  const { width, height,onChange, mediaType } = props;
   const [error, setError ] = useState({})
 
   const inputRef = React.useRef();
@@ -30,7 +31,24 @@ export default function AudioUpload(props) {
   };
 
   return (
-    <div className="AudioInput">
+    <>
+     {!source && <div
+            onClick={handleChoose}
+            style={{
+              width: "auto",
+              height: "auto",
+            //   margin: "20px",
+              border: "2px dashed gray",
+              borderRadius: "10px",
+              color: "orange",
+              cursor: "pointer",
+            }}
+          >
+            <h3>Upload {mediaType}</h3>
+            {/* <h5>Click to Upload</h5> */}
+            <img src={upload} width="100px" height="100px" />
+          </div>}
+          <div className="AudioInput">
       <input
         ref={inputRef}
         className="AudioInput_input"
@@ -38,10 +56,12 @@ export default function AudioUpload(props) {
         onChange={handleFileChange}
         accept=".mp3,.wav,.ogg"
       />
-      {!source && <button onClick={handleChoose}>Choose Audio</button>}
+      {/* {!source && <button onClick={handleChoose}>Choose Audio</button>} */}
       {source && <ReactAudioPlayer src={source} controls />}
       {/* <div className="VideoInput_footer">{source || "Nothing selectd"}</div> */}
       {error&&<div style={{ color: "red" }}>{error?.err}</div>}
     </div>
+    </>
+    
   );
 }

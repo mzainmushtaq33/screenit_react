@@ -1,7 +1,8 @@
 import React,{useState} from "react";
+import upload from "../../../services/images/upload.png";
 
 export default function VideoUpload(props) {
-  const { width, height,onChange } = props;
+  const { width, height,onChange, mediaType } = props;
   const [error, setError ] = useState({})
 
   const inputRef = React.useRef();
@@ -27,8 +28,24 @@ export default function VideoUpload(props) {
   const handleChoose = (event) => {
     inputRef.current.click();
   };
-
   return (
+    <>
+    {!source && <div
+            onClick={handleChoose}
+            style={{
+              width: "auto",
+              height: "auto",
+            //   margin: "20px",
+              border: "2px dashed gray",
+              borderRadius: "10px",
+              color: "orange",
+              cursor: "pointer",
+            }}
+          >
+            <h3>Upload {mediaType}</h3>
+            {/* <h5>Click to Upload</h5> */}
+            <img src={upload} width="100px" height="100px" />
+          </div>}
     <div className="VideoInput">
       <input
         ref={inputRef}
@@ -37,7 +54,7 @@ export default function VideoUpload(props) {
         onChange={handleFileChange}
         accept=".mov,.mp4"
       />
-      {!source && <button onClick={handleChoose}>Choose Video</button>}
+      {/* {!source && <button onClick={handleChoose}>Choose Video</button>} */}
       {source && (
         <video
           className="VideoInput_video"
@@ -50,5 +67,7 @@ export default function VideoUpload(props) {
       {error&&<div style={{ color: "red" }}>{error?.err}</div>}
       {/* <div className="VideoInput_footer">{source || "Nothing selectd"}</div> */}
     </div>
+    </>
+    
   );
 }
