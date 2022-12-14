@@ -37,12 +37,19 @@ import {
 import Transitions from "../../ui-components/extended/Transitions";
 import MainCard from "../../ui-components/cards/main-card";
 import SubCard from "../../ui-components/cards/sub-card.jsx";
+import { useLogoutMutation } from "../../../reduxToolKit/authentication/authService.js";
+import { ToastMessage } from "../../../utils/toastMessage/ToastMessage.js";
+
+
 
 // ==============================|| PROFILE MENU ||============================== //
 
 const ProfileSection = () => {
   const theme = useTheme();
   const navigate = useNavigate();
+  const userInfoLocal = JSON.parse(localStorage.getItem("screenItOnInfo"))
+
+  const [logoutRequest] = useLogoutMutation()
 
   const [selectedIndex, setSelectedIndex] = useState(-1);
   const [open, setOpen] = useState(false);
@@ -51,8 +58,17 @@ const ProfileSection = () => {
    * */
   const anchorRef = useRef(null);
   const handleLogout = async () => {
-    localStorage.removeItem("userInfo_digitallive24");
-    window.location.href = slug.LOGIN;
+    const response = await logoutRequest()
+    // console.log('response', response)
+    if(response?.error?.data?.message) {
+      ToastMessage(false, response?.error?.data?.message)
+    } else{
+      ToastMessage(true, response?.data?.message)
+      // localStorage.removeItem("userInfo_digitallive24");
+      localStorage.removeItem("screenItOnInfo");
+      // window.location.href = slug.LOGIN;
+      navigate(`${slug.LOGIN}`)
+    }
   };
 
   const handleClose = (event) => {
@@ -102,7 +118,7 @@ const ProfileSection = () => {
               stroke={1.5}
               size="1.5rem"
             />
-            <span className="dNoneMobile">Admin</span>
+            <span className="dNoneMobile">{userInfoLocal?.name}</span>
             <IconChevronDown
               stroke={1.5}
               size="1.5rem"

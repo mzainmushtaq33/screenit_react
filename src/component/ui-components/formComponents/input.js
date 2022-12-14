@@ -4,11 +4,14 @@ import LabelComponent from "./label";
 export default function InputComponent({
   label,
   placeholder,
+  handleChange,
+  value,
   labelStyle = "",
   errorMsg,
   fieldType = "input",
   required,
   className = "",
+  name,
   ...args
 }) {
   return (
@@ -22,7 +25,10 @@ export default function InputComponent({
         <Input
           placeholder={placeholder}
           size="large"
+          name={name}
+          value={value}
           {...args}
+          onChange={handleChange}
           status={errorMsg?.length ? "error" : false}
           className={`form_component ${className} `}
         />
