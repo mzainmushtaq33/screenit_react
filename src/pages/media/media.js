@@ -18,12 +18,12 @@ export default function Media() {
   const [files, setFiles] = React.useState([]);
   console.log('files xcx:>> ', files);
 
-  const S3_BUCKET ='screen-ot-it';
-const REGION ='ap-northeast-1';
+  const S3_BUCKET = process.env.REACT_APP_BUCKET_NAME;
+const REGION = process.env.REACT_APP_BUCKET_REGION;
 
 
 AWS.config.update({
-    accessKeyId: 'AKIA4JUMSCL4KKGRVZP5',
+    accessKeyId: process.env.REACT_APP_ACCESS_KEY_ID,
     secretAccessKey: process.env.REACT_APP_AWS_SECRET_ACCESS_KEY
 })
 
@@ -182,7 +182,27 @@ const myBucket = new AWS.S3({
               value={mediaValue}
             />
           </Col>
-          <Col
+          {/* <Col
+            //  lg: 8,
+            //  md: 12,
+            //  sm: 24,
+            lg={6}
+            md={12}
+            sm={24}
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "end",
+            }}
+          >
+            <MainButton clickHandler={handleUpload} btnText="upload" disabled={(files.status || files.some(item => item.status === true))? true : false}/>
+          </Col> */}
+        </Row>
+        <CustomTab tabArray={tabArray} />
+        <Row gutter={[24, 24]} style={{marginTop:'20px'}}>
+        <Col lg={10} md={12} sm={24}></Col>
+        <Col lg={8} md={12} sm={24}></Col>
+        <Col
             //  lg: 8,
             //  md: 12,
             //  sm: 24,
@@ -197,8 +217,8 @@ const myBucket = new AWS.S3({
           >
             <MainButton clickHandler={handleUpload} btnText="upload" disabled={(files.status || files.some(item => item.status === true))? true : false}/>
           </Col>
-        </Row>
-        <CustomTab tabArray={tabArray} />
+
+          </Row>
       </MainModal>
     </div>
   );

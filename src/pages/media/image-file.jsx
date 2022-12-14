@@ -25,6 +25,7 @@ const ImageFile = ({mediaName,setFiles}) => {
             defaultImages={[]}
             maxFiles={3}
             onChange={checkFiles}
+            mediaType='Images'
           />
           {/* </div> */}
         </div>
@@ -32,7 +33,7 @@ const ImageFile = ({mediaName,setFiles}) => {
       {mediaName === "Video" && (
         <div className="App_video">
           {/* <h1>Video upload</h1> */}
-          <VideoUpload width={400} height={250} onChange={checkFiles}/>
+          <VideoUpload width={400} height={250} onChange={checkFiles}  mediaType='Video'/>
         </div>
       )}
       {mediaName === "Document" && (
@@ -53,6 +54,7 @@ const ImageFile = ({mediaName,setFiles}) => {
             defaultImages={[]}
             maxFiles={3}
             onChange={checkFiles}
+            mediaType='Documents'
           />
           {/* </div> */}
         </div>
@@ -60,7 +62,7 @@ const ImageFile = ({mediaName,setFiles}) => {
       {mediaName === "Audio" && (
         <div className="App_audio">
           {/* <h1>Video upload</h1> */}
-          <AudioUpload width={400} height={250} onChange={checkFiles}/>
+          <AudioUpload width={400} height={250} onChange={checkFiles} mediaType='Audio'/>
         </div>
       )}
     </>
