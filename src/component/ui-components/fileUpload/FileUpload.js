@@ -3,8 +3,10 @@ import { useState } from "react";
 import upload from "../../../services/images/upload.png";
 import cross from "../../../services/images/cross.png";
 import simpleFile from "../../../services/images/file-alt-success.svg";
+
 // import { setSnackbar } from "../snack.service";
 import { useDispatch } from "react-redux";
+import { ToastMessage } from "../../../utils/toastMessage/ToastMessage";
 const MultiImageUpload = ({
   maxSize,
   accept,
@@ -40,6 +42,7 @@ const MultiImageUpload = ({
         let status;
 
         if (accept.includes(file.type) === false) {
+          ToastMessage(false,'Please upload these format files .jpeg, .jpg, .png')
           typeError = `Invalid format`;
           status = true;
         }

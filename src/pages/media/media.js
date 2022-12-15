@@ -8,29 +8,31 @@ import CustomTab from "../../component/ui-components/tab/tab";
 import { img_v1 } from "../../services/svg/svg-icon";
 import ImageFile from "./image-file";
 import MainButton from "../../component/ui-components/main-buttons/main-button";
-import AWS from 'aws-sdk'
+import AWS from "aws-sdk";
 import { ToastMessage } from "../../utils/toastMessage/ToastMessage";
-
+import Skeleton from "@mui/material/Skeleton";
+import { CircularProgress } from "@mui/material";
+import { Box } from "@mui/system";
 
 export default function Media() {
   const [open, setOpen] = React.useState(false);
   const [mediaValue, setMediaValue] = React.useState("Image");
   const [files, setFiles] = React.useState([]);
-  console.log('files xcx:>> ', files);
+  const [loading, setLoading] = React.useState(false);
+  console.log("files xcx:>> ", files);
 
   const S3_BUCKET = process.env.REACT_APP_BUCKET_NAME;
-const REGION = process.env.REACT_APP_BUCKET_REGION;
+  const REGION = process.env.REACT_APP_BUCKET_REGION;
 
-
-AWS.config.update({
+  AWS.config.update({
     accessKeyId: process.env.REACT_APP_ACCESS_KEY_ID,
-    secretAccessKey: process.env.REACT_APP_AWS_SECRET_ACCESS_KEY
-})
+    secretAccessKey: process.env.REACT_APP_AWS_SECRET_ACCESS_KEY,
+  });
 
-const myBucket = new AWS.S3({
-    params: { Bucket: S3_BUCKET},
+  const myBucket = new AWS.S3({
+    params: { Bucket: S3_BUCKET },
     region: REGION,
-})
+  });
 
   const headers = [
     { title: "S.No", dataIndex: "serialNo", align: "center" },
@@ -88,7 +90,13 @@ const myBucket = new AWS.S3({
     {
       name: "Media File",
       key: "imageFile",
-      component: <ImageFile mediaName={mediaValue} setFiles={setFiles}/>,
+      component: loading ? (
+        <Box sx={{ width: "100%", display: "flex", justifyContent: "center",alignItems:"center" }}>
+          <CircularProgress sx={{color:"red"}} size="60px" thickness={4.6} />
+        </Box>
+      ) : (
+        <ImageFile mediaName={mediaValue} setFiles={setFiles} />
+      ),
     },
     // {
     //   name: "Stock Image",
@@ -108,28 +116,37 @@ const myBucket = new AWS.S3({
     //   Body: file,
     //   Bucket: S3_BUCKET,
     //   Key: file.name
-  // };
-  }
+    // };
+  };
   const handleUpload = () => {
+    setLoading(true);
     // Configure the S3 client
     // Loop through the files array and upload each file to the S3 bucket
-    files.forEach(file => {
-      myBucket.upload({
-        Bucket: 'screen-ot-it',
-        Key: `${mediaValue}/${file.name}`,
-        Body: (mediaValue === 'Audio' || mediaValue === 'Video'  )? file : file.file
-      }, (err, data) => {
-        if (err) {
-          console.error('Error uploading file:', err);
-          ToastMessage(false,'Error uploading file:')
-        } else {
-          console.log('Successfully uploaded file:', data);
-          ToastMessage(true,`Successfully uploaded file:${data && data?.key}`)
+    files.forEach((file) => {
+      myBucket.upload(
+        {
+          Bucket: "screen-ot-it",
+          Key: `${mediaValue}/${file.name}`,
+          Body:
+            mediaValue === "Audio" || mediaValue === "Video" ? file : file.file,
+        },
+        (err, data) => {
+          setLoading(false);
+          if (err) {
+            console.error("Error uploading file:", err);
+            ToastMessage(false, "Error uploading file:");
+          } else {
+            console.log("Successfully uploaded file:", data);
+            ToastMessage(
+              true,
+              `Successfully uploaded file:${data && data?.key}`
+            );
+          }
         }
-      });
+      );
     });
   };
-  console.log('mediaValue :>> ', mediaValue);
+  console.log("mediaValue :>> ", mediaValue);
   return (
     <div>
       <CommonDataTable
@@ -199,10 +216,10 @@ const myBucket = new AWS.S3({
           </Col> */}
         </Row>
         <CustomTab tabArray={tabArray} />
-        <Row gutter={[24, 24]} style={{marginTop:'20px'}}>
-        <Col lg={10} md={12} sm={24}></Col>
-        <Col lg={8} md={12} sm={24}></Col>
-        <Col
+        <Row gutter={[24, 24]} style={{ marginTop: "20px" }}>
+          <Col lg={10} md={12} sm={24}></Col>
+          <Col lg={8} md={12} sm={24}></Col>
+          <Col
             //  lg: 8,
             //  md: 12,
             //  sm: 24,
@@ -215,10 +232,19 @@ const myBucket = new AWS.S3({
               alignItems: "end",
             }}
           >
-            <MainButton clickHandler={handleUpload} btnText="upload" disabled={(files.status || files.some(item => item.status === true))? true : false}/>
+            <MainButton
+              clickHandler={handleUpload}
+              btnText="upload"
+              disabled={
+                files.status ||
+                files.some((item) => item.status === true) ||
+                loading
+                  ? true
+                  : false
+              }
+            />
           </Col>
-
-          </Row>
+        </Row>
       </MainModal>
     </div>
   );
