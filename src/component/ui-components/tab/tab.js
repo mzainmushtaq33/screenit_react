@@ -1,11 +1,16 @@
 import { Tabs } from "antd";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { getSelectedMedia } from "../../../reduxToolKit/media/mediaSlice";
+
+
 const { TabPane } = Tabs;
 export default function CustomTab({
   tabArray,
   defaultActiveKey,
   destroyInactiveTabPane = false,
 }) {
+  const dispatch = useDispatch()
   let [activeKey, setActiveKey] = useState(
     defaultActiveKey ? defaultActiveKey : tabArray[0]?.key
   );
@@ -43,7 +48,7 @@ export default function CustomTab({
                   key={index}
                   className={`custom_tab_bar ${activeKey === tab.key ? "selected_custom_tab_bar" : ""
                     }`}
-                  onClick={() => setActiveKey(tab.key)}
+                  onClick={() => {setActiveKey(tab.key); dispatch(getSelectedMedia(tab.key))}}
                 >
                   {tab.name}
                 </span>

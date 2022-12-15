@@ -13,13 +13,43 @@ import { ToastMessage } from "../../utils/toastMessage/ToastMessage";
 import Skeleton from "@mui/material/Skeleton";
 import { CircularProgress } from "@mui/material";
 import { Box } from "@mui/system";
+import { useGetMediaDataQuery, usePostMediaDataMutation } from "../../reduxToolKit/media/mediaService";
+import { useSelector } from "react-redux";
 
 export default function Media() {
   const [open, setOpen] = React.useState(false);
   const [mediaValue, setMediaValue] = React.useState("Image");
   const [files, setFiles] = React.useState([]);
   const [loading, setLoading] = React.useState(false);
-  console.log("files xcx:>> ", files);
+  const [title, setTitle] = React.useState('')
+  const { mediaType } = useSelector((state) => state.mediaSlice);
+  const getMediaData = useGetMediaDataQuery(
+    mediaType == "images"
+      ? 1
+      : mediaType == "audio"
+      ? 2
+      : mediaType == "video"
+      ? 3
+      : mediaType == "documents"
+      ? 4
+      : 1
+  );
+  const [postMediaData] = usePostMediaDataMutation()
+const data =getMediaData
+  console.log("files xcx:>>getMediaData ", data,);
+  const update = []
+  const modi = data && data?.data?.data?.forEach((item,i) => {
+  const data =  {
+      serialNo: i+1,
+      itemName: item?.title,
+      // itemDescription: "Item One Description",
+      itemThumb: item?.path,
+      // schedule: new Date().toString(),
+      mediaType: item?.media_type,
+    }
+    update.push(data)
+  })
+  console.log('update', update)
 
   const S3_BUCKET = process.env.REACT_APP_BUCKET_NAME;
   const REGION = process.env.REACT_APP_BUCKET_REGION;
@@ -91,8 +121,15 @@ export default function Media() {
       name: "Media File",
       key: "imageFile",
       component: loading ? (
-        <Box sx={{ width: "100%", display: "flex", justifyContent: "center",alignItems:"center" }}>
-          <CircularProgress sx={{color:"red"}} size="60px" thickness={4.6} />
+        <Box
+          sx={{
+            width: "100%",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <CircularProgress sx={{ color: "red" }} size="60px" thickness={4.6} />
         </Box>
       ) : (
         <ImageFile mediaName={mediaValue} setFiles={setFiles} />
@@ -130,30 +167,73 @@ export default function Media() {
           Body:
             mediaValue === "Audio" || mediaValue === "Video" ? file : file.file,
         },
-        (err, data) => {
+         async (err, data) => {
           setLoading(false);
           if (err) {
             console.error("Error uploading file:", err);
             ToastMessage(false, "Error uploading file:");
           } else {
+            setFiles([]);
             console.log("Successfully uploaded file:", data);
             ToastMessage(
               true,
               `Successfully uploaded file:${data && data?.key}`
             );
+            const dataValue = {
+              media_type:mediaValue == "Image"
+              ? 1
+              : mediaValue == "Audio"
+              ? 2
+              : mediaValue == "Video"
+              ? 3
+              : mediaValue == "Document"
+              ? 4
+              : 1,
+              path:data?.Location,
+              title: title,
+            }
+            const dataMedia = await postMediaData(dataValue)
+            ToastMessage(dataMedia?.data?.success,dataMedia?.data?.message)
+            console.log('dataMedia', dataMedia)
           }
         }
       );
     });
   };
   console.log("mediaValue :>> ", mediaValue);
+  let tabVal = [
+    {
+      name: "Images",
+      key: "images",
+    },
+    {
+      name: "Audio",
+      key: "audio",
+    },
+    {
+      name: "Video",
+      key: "video",
+    },
+    {
+      name: "Documents",
+      key: "documents",
+    },
+    {
+      name: "Web Pages",
+      key: "webPages",
+    },
+  ];
+  const handleChange = (e) => {
+    setTitle(e.target.value)
+  }
   return (
     <div>
       <CommonDataTable
         addBtnText="Add Image"
+        gridTabArray={tabVal}
         addBtnClickHandler={addImage}
         headers={headers}
-        dataSource={dataSource}
+        dataSource={update}
         rowKey="serialNo"
         gridItem={{ img: "itemThumb", name: "itemName" }}
         customTabExists
@@ -180,7 +260,7 @@ export default function Media() {
               label="Title"
               required={false}
               placeholder="search"
-              // handleChange={handleChange}
+              handleChange={handleChange}
               // name= {component.key}
               // value={values[component.key]}
             />
@@ -236,8 +316,9 @@ export default function Media() {
               clickHandler={handleUpload}
               btnText="upload"
               disabled={
-                files.status ||
-                files.some((item) => item.status === true) ||
+                files.length == 0 ||
+                files?.status ||
+                files?.some((item) => item.status === true) ||
                 loading
                   ? true
                   : false

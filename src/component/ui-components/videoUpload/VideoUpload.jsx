@@ -40,6 +40,7 @@ export default function VideoUpload(props) {
               borderRadius: "10px",
               color: "orange",
               cursor: "pointer",
+              padding: '10px 20px'
             }}
           >
             <h3>Upload {mediaType}</h3>
