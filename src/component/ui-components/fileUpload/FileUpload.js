@@ -53,7 +53,7 @@ const MultiImageUpload = ({
           status = true;
         }
         if (file.size / 1024 / 1024 > maxSize) {
-          sizeError = `Size Limit: 2MB `;
+          sizeError = `Size Limit: 10MB `;
           status = true;
         }
 
