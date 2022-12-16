@@ -16,12 +16,12 @@ export default function VideoUpload(props) {
     setSource(url);
     // onChange([file])
     let sizeInKb = file.size /1000 
-    const totalSizeInKb = 500*1024;
+    const totalSizeInKb = 10*1024;
     if(sizeInKb<= totalSizeInKb){
       onChange([file])
     }else{
-         setError({err: 'Minimum size is 500MB',status:true})
-         onChange({err: 'Minimum size is 500MB',status:true})
+         setError({err: 'Minimum size is 10MB',status:true})
+         onChange({err: 'Minimum size is 10MB',status:true})
     }
   };
 
@@ -40,6 +40,7 @@ export default function VideoUpload(props) {
               borderRadius: "10px",
               color: "orange",
               cursor: "pointer",
+              padding: '10px 20px'
             }}
           >
             <h3>Upload {mediaType}</h3>

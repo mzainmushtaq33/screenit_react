@@ -20,7 +20,7 @@ const ImageFile = ({mediaName,setFiles}) => {
           {/* <div className="dragDropSec">
         Drop Some Files Here or Click to Choose */}
           <MultiImageUpload
-            maxSize={2}
+            maxSize={10}
             accept={["image/jpeg", "image/jpg", "image/png"]}
             defaultImages={[]}
             maxFiles={3}
@@ -45,7 +45,7 @@ const ImageFile = ({mediaName,setFiles}) => {
           {/* <div className="dragDropSec">
         Drop Some Files Here or Click to Choose */}
           <MultiImageUpload
-            maxSize={2}
+            maxSize={10}
             accept={[
               "application/pdf",
               "text/csv",

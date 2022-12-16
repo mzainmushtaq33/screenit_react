@@ -3,8 +3,11 @@ import { useState } from "react";
 import upload from "../../../services/images/upload.png";
 import cross from "../../../services/images/cross.png";
 import simpleFile from "../../../services/images/file-alt-success.svg";
+import InvalidImage from "../../../services/images/invalidImage.png";
+
 // import { setSnackbar } from "../snack.service";
 import { useDispatch } from "react-redux";
+import { ToastMessage } from "../../../utils/toastMessage/ToastMessage";
 const MultiImageUpload = ({
   maxSize,
   accept,
@@ -40,11 +43,17 @@ const MultiImageUpload = ({
         let status;
 
         if (accept.includes(file.type) === false) {
+          ToastMessage(
+            false,
+            mediaType === "Images"
+              ? "Please upload these format files .jpeg, .jpg, .png"
+              : "Please upload these format files .pdf, .csv, .docx"
+          );
           typeError = `Invalid format`;
           status = true;
         }
         if (file.size / 1024 / 1024 > maxSize) {
-          sizeError = `Size Limit: 2MB `;
+          sizeError = `Size Limit: 10MB `;
           status = true;
         }
 
@@ -134,51 +143,51 @@ const MultiImageUpload = ({
       <div
         style={{
           //   marginTop: "20vh",
-          display: "flex",
-          justifyContent: "center",
+          // display: "flex",
+          // justifyContent: "center",
+          width: "100%",
+          padding: "20px 20px 0px 20px",
         }}
       >
-        <div
+        {/* <div
           style={{
-            width: "40vw",
-            // minHeight: "40vh",
-            // border: "1px dashed black",
             boxShadow: " 0 3px 10px rgb(0 0 0 / 0.2)",
             padding: "30px",
           }}
+        > */}
+        <div
+          onClick={handleClick}
+          style={{
+            width: "auto",
+            height: "auto",
+            //   margin: "20px",
+            border: "2px dashed gray",
+            borderRadius: "10px",
+            color: "orange",
+            cursor: "pointer",
+            padding: "10px 20px",
+          }}
         >
-          <div
-            onClick={handleClick}
-            style={{
-              width: "auto",
-              height: "auto",
-              //   margin: "20px",
-              border: "2px dashed gray",
-              borderRadius: "10px",
-              color: "orange",
-              cursor: "pointer",
-            }}
-          >
-            <h3>Upload {mediaType}</h3>
-            {/* <h5>Click to Upload</h5> */}
-            <img src={upload} width="100px" height="100px" />
-          </div>
-          <input
-            ref={ref}
-            type="file"
-            onChange={(e) => handleChange(e)}
-            // accept={accept}
-            multiple
-            hidden
-          />
-          <div style={{ display: "flex", justifyContent: "space-evenly" }}>
-            {previewsArray.length > 0 &&
-              previewsArray.map((src, index) => (
-                <div key={index} style={{width:'130px'}}>
-                  {mediaType === "Documents" ? (
-                    <>
-                      <div style={{ position: "relative" }}>
-                        <div>
+          <h3>Upload {mediaType}</h3>
+          {/* <h5>Click to Upload</h5> */}
+          <img src={upload} width="100px" height="100px" />
+        </div>
+        <input
+          ref={ref}
+          type="file"
+          onChange={(e) => handleChange(e)}
+          // accept={accept}
+          multiple
+          hidden
+        />
+        <div style={{ display: "flex", justifyContent: "space-evenly" }}>
+          {previewsArray.length > 0 &&
+            previewsArray.map((src, index) => (
+              <div key={index} style={{ width: "130px" }}>
+                {mediaType === "Documents" ? (
+                  <>
+                    <div style={{ position: "relative" }}>
+                      <div>
                         <img
                           src={cross}
                           width="20px"
@@ -191,43 +200,46 @@ const MultiImageUpload = ({
                           }}
                           onClick={() => filterFile(src)}
                         />
-                        </div>
-                        
-                        <img
-                          src={simpleFile}
-                          width="100px"
-                          height={"100px"}
-                          // style={{ padding: "0px 20px" }}
-                        />
                       </div>
-                      <div key={index}>{(src.name.slice(0,6))}...{(src.name.slice(src.name.length-4))}</div>
-                    </>
-                  ) : (
-                    <>
-                      <div style={{ position: "relative" }}>
-                        <img
-                          src={cross}
-                          width="20px"
-                          height="20px"
-                          style={{
-                            position: "absolute",
-                            right: "-8px",
-                            top: "-6px",
-                            cursor: "pointer",
-                          }}
-                          onClick={() => filterFile(src)}
-                        />
-                        <img
-                          src={src?.src}
-                          width="100px"
-                          height={"100px"}
-                          // style={{ padding: "0px 20px" }}
-                        />
-                      </div>
-                      {/* <div key={index}>{src.name}</div> */}
-                    </>
-                  )}
-                  {/* <div style={{ position: "relative" }}>
+
+                      <img
+                        src={simpleFile}
+                        width="100px"
+                        height={"100px"}
+                        // style={{ padding: "0px 20px" }}
+                      />
+                    </div>
+                    <div key={index}>
+                      {src.name.slice(0, 6)}...
+                      {src.name.slice(src.name.length - 4)}
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    <div style={{ position: "relative",marginTop:'16px' }}>
+                      <img
+                        src={cross}
+                        width="20px"
+                        height="20px"
+                        style={{
+                          position: "absolute",
+                          right: "19px",
+                          top: "-6px",
+                          cursor: "pointer",
+                        }}
+                        onClick={() => filterFile(src)}
+                      />
+                      <img
+                        src={src.status ? InvalidImage : src?.src}
+                        width="100px"
+                        height={"100px"}
+                        // style={{ padding: "0px 20px" }}
+                      />
+                    </div>
+                    {/* <div key={index}>{src.name}</div> */}
+                  </>
+                )}
+                {/* <div style={{ position: "relative" }}>
                     <img
                       src={cross}
                       width="20px"
@@ -247,12 +259,12 @@ const MultiImageUpload = ({
                       // style={{ padding: "0px 20px" }}
                     />
                   </div> */}
-                  <div style={{ color: "red" }}>{src?.typeError}</div>
-                  <div style={{ color: "red" }}>{src?.sizeError}</div>
-                </div>
-              ))}
-          </div>
+                <div style={{ color: "red" }}>{src?.typeError}</div>
+                <div style={{ color: "red" }}>{src?.sizeError}</div>
+              </div>
+            ))}
         </div>
+        {/* </div> */}
       </div>
       <div style={{ color: "red" }}>{error}</div>
       {/* <div>
