@@ -13,7 +13,7 @@ import { ToastMessage } from "../../utils/toastMessage/ToastMessage";
 import Skeleton from "@mui/material/Skeleton";
 import { CircularProgress } from "@mui/material";
 import { Box } from "@mui/system";
-import { useGetMediaDataQuery, usePostMediaDataMutation } from "../../reduxToolKit/media/mediaService";
+import { useGetMediaDataQuery, usePostMediaDataMutation ,useDeleteMediaDataQuery} from "../../reduxToolKit/media/mediaService";
 import { useSelector } from "react-redux";
 
 export default function Media() {
@@ -22,6 +22,7 @@ export default function Media() {
   const [files, setFiles] = React.useState([]);
   const [loading, setLoading] = React.useState(false);
   const [title, setTitle] = React.useState('')
+  const [deleteId,setDeleteId] = React.useState('')
   const { mediaType } = useSelector((state) => state.mediaSlice);
   const {data=[],isLoading,isFetching} = useGetMediaDataQuery(
     mediaType == "images"
@@ -32,11 +33,12 @@ export default function Media() {
       ? 3
       : mediaType == "documents"
       ? 4
-      : null
+      : 1
   );
   const [postMediaData] = usePostMediaDataMutation()
+  const deleteResdata = useDeleteMediaDataQuery(deleteId&&deleteId)
 const dataResult =data
-  console.log("isLoading ",isFetching, isLoading);
+  console.log("deleteResdata ", deleteResdata);
   const update = []
   const modi = dataResult && dataResult?.data?.forEach((item,i) => {
   const data =  {
@@ -243,7 +245,7 @@ const dataResult =data
         gridItem={{ img: "itemThumb", name: "itemName" }}
         customTabExists
         editClickHandler={(item) => console.log("edit===>", item)}
-        deleteClickHandler={(item) => console.log("delete===>", item)}
+        deleteClickHandler={(item) => {setDeleteId(item.itemThumb)}}
         duplicateClickHandler={(item) => console.log("duplicate===>", item)}
       />
       <MainModal

@@ -7,10 +7,6 @@ import SwitchComponent from "../formComponents/switch";
 import Audio from "../../../services/images/audio.jpg";
 import Document from "../../../services/images/document.jpg";
 import Video from "../../../services/images/video.jpg";
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import Skeleton from '@mui/material/Skeleton';
-
 
 export default function CardItem({
   item,
@@ -24,24 +20,10 @@ export default function CardItem({
   checkboxClickHandler = () => {},
   showActions = true,
 }) {
-  console.log("item,height, gridItem,", item, height, gridItem);
+  console.log("loadingState", loadingState);
   return (
     <>
-      
-      { <Card sx={{ maxWidth: 345, m: 2 }}>
-      {loadingState ? (
-        <Skeleton sx={{ height: 190 }} animation="wave" variant="rectangular" />
-      ) : (
-        null
-      )}
-      <CardContent>
-        {loadingState ? (
-          <React.Fragment>
-            <Skeleton animation="wave" height={10} style={{ marginBottom: 6 }} />
-            {/* <Skeleton animation="wave" height={10} width="80%" /> */}
-          </React.Fragment>
-        ) : (
-          gridItem && (
+      { gridItem && (
             <div style={gridItem.img ? null : cardStyle}>
               <Col md={24}>
                 {gridItem.img && (
@@ -52,7 +34,11 @@ export default function CardItem({
                         <IconEye />
                       </span>
                     )}
-                    <CardImg src={item[gridItem.img]} height={height} data={item} />
+                    <CardImg
+                      src={item[gridItem.img]}
+                      height={height}
+                      data={item}
+                    />
                   </Row>
                 )}
                 <Row className={`titleName`}>
@@ -88,7 +74,7 @@ export default function CardItem({
                       {item[gridItem.secondName]}
                     </Col>
                   )}
-    
+
                   {gridItem.switch && switchClickHandler && (
                     <Col md={6} className="justify_content_end">
                       <SwitchComponent
@@ -107,10 +93,7 @@ export default function CardItem({
                 )}
               </Col>
             </div>
-          )
-        )}
-      </CardContent>
-    </Card>}
+          )}
     </>
   );
 }
@@ -120,25 +103,24 @@ function CardImg({ src, height = "auto", data }) {
 
   return (
     <>
-    <img
-      src={
-        data?.mediaType == 1
-          ? src
-          : data?.mediaType == 2
-          ? Audio
-          : data?.mediaType == 3
-          ? Video
-          : data?.mediaType == 4
-          ? Document
-          : null
-      }
-      alt=""
-      width={"100%"}
-      height={height}
-      style={{ borderRadius: "20px", minHeight: "250px", objectFit: "cover" }}
-    />
+      <img
+        src={
+          data?.mediaType == 1
+            ? src
+            : data?.mediaType == 2
+            ? Audio
+            : data?.mediaType == 3
+            ? Video
+            : data?.mediaType == 4
+            ? Document
+            : null
+        }
+        alt=""
+        width={"100%"}
+        height={height}
+        style={{ borderRadius: "20px", minHeight: "250px", objectFit: "cover" }}
+      />
     </>
-    
   );
 }
 let cardStyle = {
@@ -157,4 +139,3 @@ let cardSecondNameStyle = {
 let cardThirdNameStyle = {
   font: "normal normal bold 20px/25px helveticaNeueExtraLight",
 };
-

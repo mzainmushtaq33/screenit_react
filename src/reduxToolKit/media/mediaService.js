@@ -2,6 +2,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import {
   API_MEDIA_STORE,
   API_GET_MEDIA_BY_ID,
+  API_DELETE_MEDIA_BY_ID
 } from "../../constants/endpoints";
 
 export const mediaService = createApi({
@@ -36,6 +37,13 @@ export const mediaService = createApi({
         body: formdata,
       }),
     }),
+    deleteMediaData: builder.query({
+      providesTags: ["media"],
+      query: (id) => ({
+        url: `${API_DELETE_MEDIA_BY_ID}/${id}`,
+        method: "GET",
+      }),
+    }),
   }),
 });
-export const { useGetMediaDataQuery, usePostMediaDataMutation } = mediaService;
+export const { useGetMediaDataQuery, usePostMediaDataMutation,useDeleteMediaDataQuery } = mediaService;
