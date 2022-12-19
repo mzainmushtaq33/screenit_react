@@ -4,100 +4,141 @@ import React from "react";
 import { ActionComponent } from "../commonDataTable/commonDataTable";
 import CheckboxComponent from "../formComponents/checkbox";
 import SwitchComponent from "../formComponents/switch";
+import Audio from "../../../services/images/audio.jpg";
+import Document from "../../../services/images/document.jpg";
+import Video from "../../../services/images/video.jpg";
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import Skeleton from '@mui/material/Skeleton';
+
 
 export default function CardItem({
   item,
   height,
   gridItem,
   secondNameDesign,
+  loadingState,
   imgOverflowIcn,
   optionArray = [],
   switchClickHandler = () => {},
   checkboxClickHandler = () => {},
   showActions = true,
 }) {
+  console.log("item,height, gridItem,", item, height, gridItem);
   return (
     <>
-      {gridItem && (
-        <div style={gridItem.img ? null : cardStyle}>
-          <Col md={24}>
-            {gridItem.img && (
-              <Row className="mb-4 position-relative">
-                {imgOverflowIcn && (
-                  <span className="imgIconEye">
-                    {" "}
-                    <IconEye />
-                  </span>
+      
+      { <Card sx={{ maxWidth: 345, m: 2 }}>
+      {loadingState ? (
+        <Skeleton sx={{ height: 190 }} animation="wave" variant="rectangular" />
+      ) : (
+        null
+      )}
+      <CardContent>
+        {loadingState ? (
+          <React.Fragment>
+            <Skeleton animation="wave" height={10} style={{ marginBottom: 6 }} />
+            {/* <Skeleton animation="wave" height={10} width="80%" /> */}
+          </React.Fragment>
+        ) : (
+          gridItem && (
+            <div style={gridItem.img ? null : cardStyle}>
+              <Col md={24}>
+                {gridItem.img && (
+                  <Row className="mb-4 position-relative">
+                    {imgOverflowIcn && (
+                      <span className="imgIconEye">
+                        {" "}
+                        <IconEye />
+                      </span>
+                    )}
+                    <CardImg src={item[gridItem.img]} height={height} data={item} />
+                  </Row>
                 )}
-                <CardImg src={item[gridItem.img]} height={height} />
-              </Row>
-            )}
-            <Row className={`titleName`}>
-              {gridItem.name && (
-                <Col md={20} style={cardNameStyle}>
-                  {item[gridItem.name]}
-                </Col>
-              )}
-              {gridItem.checkbox && (
-                <Col md={4} className="text-end">
-                  <CheckboxComponent
-                    onChange={(value) => checkboxClickHandler(item, value)}
-                  />
-                </Col>
-              )}
-              <Col
-                md={4}
-                style={cardNameStyle}
-                className={gridItem.checkbox ? "" : "text-end"}
-              >
-                {showActions && (
-                  <ActionComponent optionArray={optionArray} item={item} />
+                <Row className={`titleName`}>
+                  {gridItem.name && (
+                    <Col md={20} style={cardNameStyle}>
+                      {item[gridItem.name]}
+                    </Col>
+                  )}
+                  {gridItem.checkbox && (
+                    <Col md={4} className="text-end">
+                      <CheckboxComponent
+                        onChange={(value) => checkboxClickHandler(item, value)}
+                      />
+                    </Col>
+                  )}
+                  <Col
+                    md={4}
+                    style={cardNameStyle}
+                    className={gridItem.checkbox ? "" : "text-end"}
+                  >
+                    {showActions && (
+                      <ActionComponent optionArray={optionArray} item={item} />
+                    )}
+                  </Col>
+                </Row>
+                <Row className="">
+                  {gridItem.secondName && (
+                    <Col
+                      md={18}
+                      className={secondNameDesign}
+                      style={cardSecondNameStyle}
+                    >
+                      {item[gridItem.secondName]}
+                    </Col>
+                  )}
+    
+                  {gridItem.switch && switchClickHandler && (
+                    <Col md={6} className="justify_content_end">
+                      <SwitchComponent
+                        value={item[gridItem.switch]}
+                        onChange={(value) => switchClickHandler(item, value)}
+                      />
+                    </Col>
+                  )}
+                </Row>
+                {gridItem.thirdName && (
+                  <Row className="mt-4">
+                    <Col md={24} style={cardThirdNameStyle}>
+                      {item[gridItem.thirdName]}
+                    </Col>
+                  </Row>
                 )}
               </Col>
-            </Row>
-            <Row className="">
-              {gridItem.secondName && (
-                <Col
-                  md={18}
-                  className={secondNameDesign}
-                  style={cardSecondNameStyle}
-                >
-                  {item[gridItem.secondName]}
-                </Col>
-              )}
-
-              {gridItem.switch && switchClickHandler && (
-                <Col md={6} className="justify_content_end">
-                  <SwitchComponent
-                    value={item[gridItem.switch]}
-                    onChange={(value) => switchClickHandler(item, value)}
-                  />
-                </Col>
-              )}
-            </Row>
-            {gridItem.thirdName && (
-              <Row className="mt-4">
-                <Col md={24} style={cardThirdNameStyle}>
-                  {item[gridItem.thirdName]}
-                </Col>
-              </Row>
-            )}
-          </Col>
-        </div>
-      )}
+            </div>
+          )
+        )}
+      </CardContent>
+    </Card>}
     </>
   );
 }
 
-function CardImg({ src, height = "auto" }) {
+function CardImg({ src, height = "auto", data }) {
+  console.log("data ", data);
+
   return (
+    <>
     <img
-      src={src}
+      src={
+        data?.mediaType == 1
+          ? src
+          : data?.mediaType == 2
+          ? Audio
+          : data?.mediaType == 3
+          ? Video
+          : data?.mediaType == 4
+          ? Document
+          : null
+      }
       alt=""
       width={"100%"}
       height={height}
       style={{ borderRadius: "20px", minHeight: "250px", objectFit: "cover" }}
     />
+    </>
+    
   );
 }
 let cardStyle = {
@@ -116,3 +157,4 @@ let cardSecondNameStyle = {
 let cardThirdNameStyle = {
   font: "normal normal bold 20px/25px helveticaNeueExtraLight",
 };
+

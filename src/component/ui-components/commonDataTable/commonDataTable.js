@@ -18,9 +18,11 @@ import CustomTab from "../tab/tab";
 import "./style.scss";
 import { Grid } from "@mui/material";
 
+
 export default function CommonDataTable({
   headers = [],
   dataSource = [],
+  loadingState=false,
   gridItem,
   rowKey,
   gridTabArray,
@@ -220,27 +222,28 @@ export default function CommonDataTable({
               </Grid>
             )}
             {filteredDataSource.map((item, index) => (
-              <Grid
-                item
-                xs={12}
-                md={6}
-                lg={4}
-                xl={3}
-                key={index}
-                className="itemParent"
-              >
-                <CardItem
-                  height={item?.height}
-                  imgOverflowIcn={imgOverflowIcn}
-                  item={item}
-                  gridItem={gridItem}
-                  optionArray={optionArray}
-                  switchClickHandler={switchClickHandler}
-                  checkboxClickHandler={checkboxClickHandler}
-                  showActions={selectedToggleValue !== "default"}
-                />
-              </Grid>
-            ))}
+            <Grid
+              item
+              xs={12}
+              md={6}
+              lg={4}
+              xl={3}
+              key={index}
+              className="itemParent"
+            >
+              <CardItem
+                height={item?.height}
+                imgOverflowIcn={imgOverflowIcn}
+                item={item}
+                loadingState={loadingState}
+                gridItem={gridItem}
+                optionArray={optionArray}
+                switchClickHandler={switchClickHandler}
+                checkboxClickHandler={checkboxClickHandler}
+                showActions={selectedToggleValue !== "default"}
+              />
+            </Grid>
+          ))}
           </Grid>
         )}
         {view === "table" && (
