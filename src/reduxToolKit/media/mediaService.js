@@ -29,7 +29,7 @@ export const mediaService = createApi({
       }),
     }),
     postMediaData: builder.mutation({
-      //   invalidatesTags: ["userProfile"],
+        invalidatesTags: ["media"],
       query: (formdata) => ({
         url: `${API_MEDIA_STORE}`,
         method: "POST",

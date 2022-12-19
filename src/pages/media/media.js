@@ -32,7 +32,7 @@ export default function Media() {
       ? 3
       : mediaType == "documents"
       ? 4
-      : 1
+      : null
   );
   const [postMediaData] = usePostMediaDataMutation()
 const dataResult =data
@@ -195,6 +195,9 @@ const dataResult =data
             }
             const dataMedia = await postMediaData(dataValue)
             ToastMessage(dataMedia?.data?.success,dataMedia?.data?.message)
+            if(dataMedia?.data?.success){
+              setOpen(false)
+            }
             console.log('dataMedia', dataMedia)
           }
         }
