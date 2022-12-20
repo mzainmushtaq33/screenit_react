@@ -7,6 +7,7 @@ import SwitchComponent from "../formComponents/switch";
 import Audio from "../../../services/images/audio.jpg";
 import Document from "../../../services/images/document.jpg";
 import Video from "../../../services/images/video.jpg";
+import { Box } from "@mui/material";
 
 export default function CardItem({
   item,
@@ -23,77 +24,73 @@ export default function CardItem({
   console.log("loadingState", loadingState);
   return (
     <>
-      { gridItem && (
-            <div style={gridItem.img ? null : cardStyle}>
-              <Col md={24}>
-                {gridItem.img && (
-                  <Row className="mb-4 position-relative">
-                    {imgOverflowIcn && (
-                      <span className="imgIconEye">
-                        {" "}
-                        <IconEye />
-                      </span>
-                    )}
-                    <CardImg
-                      src={item[gridItem.img]}
-                      height={height}
-                      data={item}
-                    />
-                  </Row>
+      {gridItem && (
+        <div style={gridItem.img ? null : cardStyle}>
+          <Col md={24}>
+            {gridItem.img && (
+              <Row className="mb-4 position-relative">
+                {imgOverflowIcn && (
+                  <span className="imgIconEye">
+                    {" "}
+                    <IconEye />
+                  </span>
                 )}
-                <Row className={`titleName`}>
-                  {gridItem.name && (
-                    <Col md={20} style={cardNameStyle}>
-                      {item[gridItem.name]}
-                    </Col>
-                  )}
-                  {gridItem.checkbox && (
-                    <Col md={4} className="text-end">
-                      <CheckboxComponent
-                        onChange={(value) => checkboxClickHandler(item, value)}
-                      />
-                    </Col>
-                  )}
-                  <Col
-                    md={4}
-                    style={cardNameStyle}
-                    className={gridItem.checkbox ? "" : "text-end"}
-                  >
-                    {showActions && (
-                      <ActionComponent optionArray={optionArray} item={item} />
-                    )}
-                  </Col>
-                </Row>
-                <Row className="">
-                  {gridItem.secondName && (
-                    <Col
-                      md={18}
-                      className={secondNameDesign}
-                      style={cardSecondNameStyle}
-                    >
-                      {item[gridItem.secondName]}
-                    </Col>
-                  )}
-
-                  {gridItem.switch && switchClickHandler && (
-                    <Col md={6} className="justify_content_end">
-                      <SwitchComponent
-                        value={item[gridItem.switch]}
-                        onChange={(value) => switchClickHandler(item, value)}
-                      />
-                    </Col>
-                  )}
-                </Row>
-                {gridItem.thirdName && (
-                  <Row className="mt-4">
-                    <Col md={24} style={cardThirdNameStyle}>
-                      {item[gridItem.thirdName]}
-                    </Col>
-                  </Row>
+                <CardImg src={item[gridItem.img]} height={height} data={item} />
+              </Row>
+            )}
+            <Row className={`titleName`}>
+              {gridItem.name && (
+                <Col md={20} style={cardNameStyle}>
+                  {item[gridItem.name]}
+                </Col>
+              )}
+              {gridItem.checkbox && (
+                <Col md={4} className="text-end">
+                  <CheckboxComponent
+                    onChange={(value) => checkboxClickHandler(item, value)}
+                  />
+                </Col>
+              )}
+              <Col
+                md={4}
+                style={cardNameStyle}
+                className={gridItem.checkbox ? "" : "text-end"}
+              >
+                {showActions && (
+                  <ActionComponent optionArray={optionArray} item={item} />
                 )}
               </Col>
-            </div>
-          )}
+            </Row>
+            <Row className="">
+              {gridItem.secondName && (
+                <Col
+                  md={18}
+                  className={secondNameDesign}
+                  style={cardSecondNameStyle}
+                >
+                  {item[gridItem.secondName]}
+                </Col>
+              )}
+
+              {gridItem.switch && switchClickHandler && (
+                <Col md={6} className="justify_content_end">
+                  <SwitchComponent
+                    value={item[gridItem.switch]}
+                    onChange={(value) => switchClickHandler(item, value)}
+                  />
+                </Col>
+              )}
+            </Row>
+            {gridItem.thirdName && (
+              <Row className="mt-4">
+                <Col md={24} style={cardThirdNameStyle}>
+                  {item[gridItem.thirdName]}
+                </Col>
+              </Row>
+            )}
+          </Col>
+        </div>
+      )}
     </>
   );
 }
@@ -103,23 +100,38 @@ function CardImg({ src, height = "auto", data }) {
 
   return (
     <>
-      <img
-        src={
-          data?.mediaType == 1
-            ? src
-            : data?.mediaType == 2
-            ? Audio
-            : data?.mediaType == 3
-            ? Video
-            : data?.mediaType == 4
-            ? Document
-            : null
-        }
-        alt=""
-        width={"100%"}
-        height={height}
-        style={{ borderRadius: "20px", minHeight: "250px", objectFit: "cover" }}
-      />
+      {data?.mediaType == 3 ? (
+        <Box sx={{height:'400px', width:'400px'}}>
+<video width="400" height="400" style={{paddingRight:'40px'}} controls="controls" preload="metadata">
+          <source src={data.itemThumb + "#t=0.5"} type="video/mp4" />
+        </video>
+        </Box>
+        
+      ) : (
+        <a href={data.itemThumb} target="_blank" style={{width:"100%"}}>
+          <img
+            src={
+              data?.mediaType == 1
+                ? src
+                : data?.mediaType == 2
+                ? Audio
+                : data?.mediaType == 3
+                ? Video
+                : data?.mediaType == 4
+                ? Document
+                : null
+            }
+            alt=""
+            width={"100%"}
+            height={height}
+            style={{
+              borderRadius: "20px",
+              minHeight: "250px",
+              objectFit: "cover",
+            }}
+          />
+        </a>
+      )}
     </>
   );
 }

@@ -37,13 +37,20 @@ export const mediaService = createApi({
         body: formdata,
       }),
     }),
-    deleteMediaData: builder.query({
-      providesTags: ["media"],
-      query: (id) => ({
-        url: `${API_DELETE_MEDIA_BY_ID}/${id}`,
-        method: "GET",
-      }),
+    // deleteMediaData: builder.query({
+    //   providesTags: ["media"],
+    //   query: (id) => ({
+    //     url: `${API_DELETE_MEDIA_BY_ID}/${id}`,
+    //     method: "GET",
+    //   }),
+    // }),
+    deleteMediaData: builder.mutation({
+      // invalidatesTags: ["media"],
+    query: (id) => (console.log('id',id),{
+      url: `${API_DELETE_MEDIA_BY_ID}/${id}`,
+      method: "GET",
     }),
   }),
+  }),
 });
-export const { useGetMediaDataQuery, usePostMediaDataMutation,useDeleteMediaDataQuery } = mediaService;
+export const { useGetMediaDataQuery, usePostMediaDataMutation,useDeleteMediaDataMutation } = mediaService;
