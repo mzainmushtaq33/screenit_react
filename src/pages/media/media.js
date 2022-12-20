@@ -16,6 +16,7 @@ import { Box } from "@mui/system";
 import { useGetMediaDataQuery, usePostMediaDataMutation ,useDeleteMediaDataMutation} from "../../reduxToolKit/media/mediaService";
 import { useSelector } from "react-redux";
 
+
 export default function Media() {
   const [open, setOpen] = React.useState(false);
   const [mediaValue, setMediaValue] = React.useState("Image");
@@ -233,6 +234,8 @@ const dataResult =data
   const deleteClickHandler = async (item) => {
     const res = await deleteMediaData(item.itemThumb)
     console.log('res', res)
+    ToastMessage(res?.data?.success || res?.error?.data?.success,
+      res?.data?.message || res?.error?.data?.message)
   }
   return (
     <div>
