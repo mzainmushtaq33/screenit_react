@@ -16,11 +16,13 @@ import MainButton from "../main-buttons/main-button";
 import DataTable from "../main-table/main-table";
 import CustomTab from "../tab/tab";
 import "./style.scss";
-import { Grid } from "@mui/material";
+import { Card, CardContent, Grid, Skeleton } from "@mui/material";
+
 
 export default function CommonDataTable({
   headers = [],
   dataSource = [],
+  loadingState=false,
   gridItem,
   rowKey,
   gridTabArray,
@@ -75,16 +77,16 @@ export default function CommonDataTable({
   }, [searchKeyword]);
 
   let optionArray = [
-    {
-      name: "Edit",
-      clickHandler: editClickHandler,
-      icon: edit_v1,
-    },
-    {
-      name: "Duplicate",
-      clickHandler: duplicateClickHandler,
-      icon: <IconCopy />,
-    },
+    // {
+    //   name: "Edit",
+    //   clickHandler: editClickHandler,
+    //   icon: edit_v1,
+    // },
+    // {
+    //   name: "Duplicate",
+    //   clickHandler: duplicateClickHandler,
+    //   icon: <IconCopy />,
+    // },
     {
       name: "Delete",
       clickHandler: deleteClickHandler,
@@ -219,28 +221,62 @@ export default function CommonDataTable({
                 <CustomTab tabArray={gridTabArray ? gridTabArray : tabVal} />
               </Grid>
             )}
-            {filteredDataSource.map((item, index) => (
+            {loadingState
+        ? [...Array(8).keys()].map((e,index) => {
+            return (
+              <>
               <Grid
-                item
-                xs={12}
-                md={6}
-                lg={4}
-                xl={3}
-                key={index}
-                className="itemParent"
-              >
-                <CardItem
-                  height={item?.height}
-                  imgOverflowIcn={imgOverflowIcn}
-                  item={item}
-                  gridItem={gridItem}
-                  optionArray={optionArray}
-                  switchClickHandler={switchClickHandler}
-                  checkboxClickHandler={checkboxClickHandler}
-                  showActions={selectedToggleValue !== "default"}
-                />
-              </Grid>
-            ))}
+              item
+              xs={12}
+              md={6}
+              lg={4}
+              xl={3}
+              key={index}
+              className="itemParent"
+            >
+                <Card sx={{ maxWidth: 345, m: 2 }}>
+                    <Skeleton
+                      sx={{ height: 190 }}
+                      animation="wave"
+                      variant="rectangular"
+                    />
+                  <CardContent>
+                      <React.Fragment>
+                        <Skeleton
+                          animation="wave"
+                          height={10}
+                          style={{ marginBottom: 6 }}
+                        />
+                        {/* <Skeleton animation="wave" height={10} width="80%" /> */}
+                      </React.Fragment>
+                  </CardContent>
+                </Card>
+                </Grid>
+              </>
+            );
+          }) : filteredDataSource.map((item, index) => (
+            <Grid
+              item
+              xs={12}
+              md={6}
+              lg={4}
+              xl={3}
+              key={index}
+              className="itemParent"
+            >
+              <CardItem
+                height={item?.height}
+                imgOverflowIcn={imgOverflowIcn}
+                item={item}
+                loadingState={loadingState}
+                gridItem={gridItem}
+                optionArray={optionArray}
+                switchClickHandler={switchClickHandler}
+                checkboxClickHandler={checkboxClickHandler}
+                showActions={selectedToggleValue !== "default"}
+              />
+            </Grid>
+          ))}
           </Grid>
         )}
         {view === "table" && (

@@ -13,7 +13,7 @@ import { ToastMessage } from "../../utils/toastMessage/ToastMessage";
 import Skeleton from "@mui/material/Skeleton";
 import { CircularProgress } from "@mui/material";
 import { Box } from "@mui/system";
-import { useGetMediaDataQuery, usePostMediaDataMutation } from "../../reduxToolKit/media/mediaService";
+import { useGetMediaDataQuery, usePostMediaDataMutation ,useDeleteMediaDataQuery} from "../../reduxToolKit/media/mediaService";
 import { useSelector } from "react-redux";
 
 export default function Media() {
@@ -22,8 +22,9 @@ export default function Media() {
   const [files, setFiles] = React.useState([]);
   const [loading, setLoading] = React.useState(false);
   const [title, setTitle] = React.useState('')
+  const [deleteId,setDeleteId] = React.useState('')
   const { mediaType } = useSelector((state) => state.mediaSlice);
-  const getMediaData = useGetMediaDataQuery(
+  const {data=[],isLoading,isFetching} = useGetMediaDataQuery(
     mediaType == "images"
       ? 1
       : mediaType == "audio"
@@ -35,10 +36,11 @@ export default function Media() {
       : 1
   );
   const [postMediaData] = usePostMediaDataMutation()
-const data =getMediaData
-  console.log("files xcx:>>getMediaData ", data,);
+  const deleteResdata = useDeleteMediaDataQuery(deleteId&&deleteId)
+const dataResult =data
+  console.log("deleteResdata ", deleteResdata);
   const update = []
-  const modi = data && data?.data?.data?.forEach((item,i) => {
+  const modi = dataResult && dataResult?.data?.forEach((item,i) => {
   const data =  {
       serialNo: i+1,
       itemName: item?.title,
@@ -46,6 +48,7 @@ const data =getMediaData
       itemThumb: item?.path,
       // schedule: new Date().toString(),
       mediaType: item?.media_type,
+      height:'230px'
     }
     update.push(data)
   })
@@ -194,6 +197,9 @@ const data =getMediaData
             }
             const dataMedia = await postMediaData(dataValue)
             ToastMessage(dataMedia?.data?.success,dataMedia?.data?.message)
+            if(dataMedia?.data?.success){
+              setOpen(false)
+            }
             console.log('dataMedia', dataMedia)
           }
         }
@@ -234,11 +240,12 @@ const data =getMediaData
         addBtnClickHandler={addImage}
         headers={headers}
         dataSource={update}
+        loadingState={isFetching}
         rowKey="serialNo"
         gridItem={{ img: "itemThumb", name: "itemName" }}
         customTabExists
         editClickHandler={(item) => console.log("edit===>", item)}
-        deleteClickHandler={(item) => console.log("delete===>", item)}
+        deleteClickHandler={(item) => {setDeleteId(item.itemThumb)}}
         duplicateClickHandler={(item) => console.log("duplicate===>", item)}
       />
       <MainModal
