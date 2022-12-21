@@ -15,6 +15,7 @@ import { CircularProgress } from "@mui/material";
 import { Box } from "@mui/system";
 import { useGetMediaDataQuery, usePostMediaDataMutation ,useDeleteMediaDataMutation} from "../../reduxToolKit/media/mediaService";
 import { useSelector } from "react-redux";
+import Pagination from "../../component/ui-components/pagination/Pagination";
 
 
 
@@ -23,25 +24,31 @@ import { useSelector } from "react-redux";
 
 export default function Media() {
   const [open, setOpen] = React.useState(false);
+  const [page, setPage] = React.useState(1);
   const [mediaValue, setMediaValue] = React.useState("Image");
   const [files, setFiles] = React.useState([]);
   const [loading, setLoading] = React.useState(false);
   const [title, setTitle] = React.useState('')
   const { mediaType } = useSelector((state) => state.mediaSlice);
+  let media =  mediaType == "images"
+  ? 1
+  : mediaType == "audio"
+  ? 2
+  : mediaType == "video"
+  ? 3
+  : mediaType == "documents"
+  ? 4
+  : 1;
   const {data=[],isLoading,isFetching} = useGetMediaDataQuery(
-    mediaType == "images"
-      ? 1
-      : mediaType == "audio"
-      ? 2
-      : mediaType == "video"
-      ? 3
-      : mediaType == "documents"
-      ? 4
-      : 1
+    {media,page}
   );
   const [postMediaData] = usePostMediaDataMutation()
   const [deleteMediaData] = useDeleteMediaDataMutation()
-const dataResult =data
+  React.useEffect(() => {
+    setPage(1)
+  }, [mediaType])
+  
+  const dataResult =data
   const update = []
   const modi = dataResult && dataResult?.data?.data?.forEach((item,i) => {
   const data =  {
@@ -241,6 +248,9 @@ const dataResult =data
     ToastMessage(res?.data?.success || res?.error?.data?.success,
       res?.data?.message || res?.error?.data?.message)
   }
+  const paginationHandler = (event, value) => {
+    setPage(value);
+  };
   return (
     <div>
       <CommonDataTable
@@ -343,6 +353,15 @@ const dataResult =data
           </Col>
         </Row>
       </MainModal>
+      <Pagination
+                handleChangePage={paginationHandler}
+                totalItems={dataResult?.data?.data?.length}
+                pageSize={15}
+                pageNo={page}
+                totalCounts={
+                  dataResult?.data?.total
+                }
+              />
     </div>
   );
 }

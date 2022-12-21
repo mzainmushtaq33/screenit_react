@@ -304,12 +304,13 @@ const DataTable = ({
           // className="thead"
           columns={headerCol}
           dataSource={data}
-          pagination={{
-            disabled: false,
-            simple: true,
-            responsive: true,
-            itemRender,
-          }}
+          // pagination={{
+          //   disabled: true,
+          //   simple: true,
+          //   responsive: true,
+          //   itemRender,
+          // }}
+          pagination={false}
           {...args}
         ></Table>
       </div>

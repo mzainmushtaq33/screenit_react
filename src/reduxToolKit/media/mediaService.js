@@ -2,7 +2,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import {
   API_MEDIA_STORE,
   API_GET_MEDIA_BY_ID,
-  API_DELETE_MEDIA_BY_ID
+  API_DELETE_MEDIA_BY_ID,
 } from "../../constants/endpoints";
 
 export const mediaService = createApi({
@@ -25,12 +25,12 @@ export const mediaService = createApi({
     getMediaData: builder.query({
       providesTags: ["media"],
       query: (id) => ({
-        url: `${API_GET_MEDIA_BY_ID}?media_type=${id}`,
+        url: `${API_GET_MEDIA_BY_ID}?media_type=${id.media}&page=${id.page}&page_size=15`,
         method: "GET",
       }),
     }),
     postMediaData: builder.mutation({
-        invalidatesTags: ["media"],
+      invalidatesTags: ["media"],
       query: (formdata) => ({
         url: `${API_MEDIA_STORE}`,
         method: "POST",
@@ -46,11 +46,18 @@ export const mediaService = createApi({
     // }),
     deleteMediaData: builder.mutation({
       invalidatesTags: ["media"],
-    query: (id) => (console.log('id',id),{
-      url: `${API_DELETE_MEDIA_BY_ID}?id=${id}`,
-      method: "GET",
+      query: (id) => (
+        console.log("id", id),
+        {
+          url: `${API_DELETE_MEDIA_BY_ID}?id=${id}`,
+          method: "GET",
+        }
+      ),
     }),
   }),
-  }),
 });
-export const { useGetMediaDataQuery, usePostMediaDataMutation,useDeleteMediaDataMutation } = mediaService;
+export const {
+  useGetMediaDataQuery,
+  usePostMediaDataMutation,
+  useDeleteMediaDataMutation,
+} = mediaService;
