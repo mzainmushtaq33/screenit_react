@@ -17,6 +17,10 @@ import { useGetMediaDataQuery, usePostMediaDataMutation ,useDeleteMediaDataMutat
 import { useSelector } from "react-redux";
 
 
+
+
+
+
 export default function Media() {
   const [open, setOpen] = React.useState(false);
   const [mediaValue, setMediaValue] = React.useState("Image");
@@ -39,14 +43,15 @@ export default function Media() {
   const [deleteMediaData] = useDeleteMediaDataMutation()
 const dataResult =data
   const update = []
-  const modi = dataResult && dataResult?.data?.forEach((item,i) => {
+  const modi = dataResult && dataResult?.data?.data?.forEach((item,i) => {
   const data =  {
       serialNo: i+1,
+      id:item.id,
       itemName: item?.title,
       // itemDescription: "Item One Description",
       itemThumb: item?.path,
       // schedule: new Date().toString(),
-      mediaType: item?.media_type,
+      mediaType: item?.media_type ,
       height:'230px'
     }
     update.push(data)
@@ -69,18 +74,18 @@ const dataResult =data
   const headers = [
     { title: "S.No", dataIndex: "serialNo", align: "center" },
     { title: "Item Name", dataIndex: "itemName" },
-    { title: "Item Dec", dataIndex: "itemDescription" },
+    // { title: "Item Dec", dataIndex: "itemDescription" },
     {
       title: "Item Thumb",
       dataIndex: "itemThumb",
-      type: "image",
+      type: 'image',
       align: "center",
     },
-    { title: "Scheduled Content", dataIndex: "schedule" },
+    // { title: "Scheduled Content", dataIndex: "schedule" },
     {
       title: "Media Type",
       dataIndex: "mediaType",
-      render: () => img_v1,
+      // render: () => img_v1,
       align: "center",
     },
   ];
@@ -232,8 +237,7 @@ const dataResult =data
     setTitle(e.target.value)
   }
   const deleteClickHandler = async (item) => {
-    const res = await deleteMediaData(item.itemThumb)
-    console.log('res', res)
+    const res = await deleteMediaData(item.id)
     ToastMessage(res?.data?.success || res?.error?.data?.success,
       res?.data?.message || res?.error?.data?.message)
   }

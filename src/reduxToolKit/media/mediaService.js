@@ -25,7 +25,7 @@ export const mediaService = createApi({
     getMediaData: builder.query({
       providesTags: ["media"],
       query: (id) => ({
-        url: `${API_GET_MEDIA_BY_ID}/${id}`,
+        url: `${API_GET_MEDIA_BY_ID}?media_type=${id}`,
         method: "GET",
       }),
     }),
@@ -45,9 +45,9 @@ export const mediaService = createApi({
     //   }),
     // }),
     deleteMediaData: builder.mutation({
-      // invalidatesTags: ["media"],
+      invalidatesTags: ["media"],
     query: (id) => (console.log('id',id),{
-      url: `${API_DELETE_MEDIA_BY_ID}/${id}`,
+      url: `${API_DELETE_MEDIA_BY_ID}?id=${id}`,
       method: "GET",
     }),
   }),
