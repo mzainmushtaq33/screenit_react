@@ -246,6 +246,20 @@ const DataTable = ({
     }
     return originalElement;
   };
+  const data = filteredDataSource.map((item, i) => {
+    return {
+      ...item,
+      mediaType:  item?.mediaType == 1
+      ? "image"
+      : item?.mediaType == 2
+      ? "audio"
+      : item?.mediaType == 3
+      ? "video"
+      : item?.mediaType == 4
+      ? "documents"
+      : 1
+    }
+  })
 
   return (
     <>
@@ -289,13 +303,14 @@ const DataTable = ({
           }
           // className="thead"
           columns={headerCol}
-          dataSource={filteredDataSource}
-          pagination={{
-            disabled: false,
-            simple: true,
-            responsive: true,
-            itemRender,
-          }}
+          dataSource={data}
+          // pagination={{
+          //   disabled: true,
+          //   simple: true,
+          //   responsive: true,
+          //   itemRender,
+          // }}
+          pagination={false}
           {...args}
         ></Table>
       </div>

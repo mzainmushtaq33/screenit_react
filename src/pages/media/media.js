@@ -13,41 +13,52 @@ import { ToastMessage } from "../../utils/toastMessage/ToastMessage";
 import Skeleton from "@mui/material/Skeleton";
 import { CircularProgress } from "@mui/material";
 import { Box } from "@mui/system";
-import { useGetMediaDataQuery, usePostMediaDataMutation ,useDeleteMediaDataQuery} from "../../reduxToolKit/media/mediaService";
+import { useGetMediaDataQuery, usePostMediaDataMutation ,useDeleteMediaDataMutation} from "../../reduxToolKit/media/mediaService";
 import { useSelector } from "react-redux";
+import Pagination from "../../component/ui-components/pagination/Pagination";
+
+
+
+
+
 
 export default function Media() {
   const [open, setOpen] = React.useState(false);
+  const [page, setPage] = React.useState(1);
   const [mediaValue, setMediaValue] = React.useState("Image");
   const [files, setFiles] = React.useState([]);
   const [loading, setLoading] = React.useState(false);
   const [title, setTitle] = React.useState('')
-  const [deleteId,setDeleteId] = React.useState('')
   const { mediaType } = useSelector((state) => state.mediaSlice);
+  let media =  mediaType == "images"
+  ? 1
+  : mediaType == "audio"
+  ? 2
+  : mediaType == "video"
+  ? 3
+  : mediaType == "documents"
+  ? 4
+  : 1;
   const {data=[],isLoading,isFetching} = useGetMediaDataQuery(
-    mediaType == "images"
-      ? 1
-      : mediaType == "audio"
-      ? 2
-      : mediaType == "video"
-      ? 3
-      : mediaType == "documents"
-      ? 4
-      : 1
+    {media,page}
   );
   const [postMediaData] = usePostMediaDataMutation()
-  const deleteResdata = useDeleteMediaDataQuery(deleteId&&deleteId)
-const dataResult =data
-  console.log("deleteResdata ", deleteResdata);
+  const [deleteMediaData] = useDeleteMediaDataMutation()
+  React.useEffect(() => {
+    setPage(1)
+  }, [mediaType])
+  
+  const dataResult =data
   const update = []
-  const modi = dataResult && dataResult?.data?.forEach((item,i) => {
+  const modi = dataResult && dataResult?.data?.data?.forEach((item,i) => {
   const data =  {
       serialNo: i+1,
+      id:item.id,
       itemName: item?.title,
       // itemDescription: "Item One Description",
       itemThumb: item?.path,
       // schedule: new Date().toString(),
-      mediaType: item?.media_type,
+      mediaType: item?.media_type ,
       height:'230px'
     }
     update.push(data)
@@ -70,18 +81,18 @@ const dataResult =data
   const headers = [
     { title: "S.No", dataIndex: "serialNo", align: "center" },
     { title: "Item Name", dataIndex: "itemName" },
-    { title: "Item Dec", dataIndex: "itemDescription" },
+    // { title: "Item Dec", dataIndex: "itemDescription" },
     {
       title: "Item Thumb",
       dataIndex: "itemThumb",
-      type: "image",
+      type: 'image',
       align: "center",
     },
-    { title: "Scheduled Content", dataIndex: "schedule" },
+    // { title: "Scheduled Content", dataIndex: "schedule" },
     {
       title: "Media Type",
       dataIndex: "mediaType",
-      render: () => img_v1,
+      // render: () => img_v1,
       align: "center",
     },
   ];
@@ -232,6 +243,14 @@ const dataResult =data
   const handleChange = (e) => {
     setTitle(e.target.value)
   }
+  const deleteClickHandler = async (item) => {
+    const res = await deleteMediaData(item.id)
+    ToastMessage(res?.data?.success || res?.error?.data?.success,
+      res?.data?.message || res?.error?.data?.message)
+  }
+  const paginationHandler = (event, value) => {
+    setPage(value);
+  };
   return (
     <div>
       <CommonDataTable
@@ -245,7 +264,7 @@ const dataResult =data
         gridItem={{ img: "itemThumb", name: "itemName" }}
         customTabExists
         editClickHandler={(item) => console.log("edit===>", item)}
-        deleteClickHandler={(item) => {setDeleteId(item.itemThumb)}}
+        deleteClickHandler={(item) => deleteClickHandler(item)}
         duplicateClickHandler={(item) => console.log("duplicate===>", item)}
       />
       <MainModal
@@ -334,6 +353,15 @@ const dataResult =data
           </Col>
         </Row>
       </MainModal>
+      <Pagination
+                handleChangePage={paginationHandler}
+                totalItems={dataResult?.data?.data?.length}
+                pageSize={15}
+                pageNo={page}
+                totalCounts={
+                  dataResult?.data?.total
+                }
+              />
     </div>
   );
 }
