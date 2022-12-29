@@ -39,8 +39,9 @@ export default function Media() {
   : mediaType == "documents"
   ? 4
   : 1;
+  const pageSize = 15;
   const {data=[],isLoading,isFetching} = useGetMediaDataQuery(
-    {media,page}
+    {media,page,pageSize}
   );
   const [postMediaData] = usePostMediaDataMutation()
   const [deleteMediaData] = useDeleteMediaDataMutation()

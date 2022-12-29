@@ -16,7 +16,7 @@ const FullScreenModal = ({ children, setOpen, open, titleText }) => {
         left: '50%',
         transform: 'translate(-50%, -50%)',
         width: '80%',
-        height: '90vh',
+        height: '75vh',
         overflow: 'auto',
         // bgcolor: 'background.paper',
         // border: '2px solid #000',
@@ -31,7 +31,7 @@ const FullScreenModal = ({ children, setOpen, open, titleText }) => {
             width: '75%'
         },
         [theme.breakpoints.only('lg')]: {
-            width: '65%'
+            width: '75%'
         }
         // p: 4
     };
@@ -55,7 +55,7 @@ const FullScreenModal = ({ children, setOpen, open, titleText }) => {
                 <Box sx={style}>
                     <SubCard
                         // sx={{ overflow: 'scroll' }}
-                        sx={{ border: 'none', borderRadius: '20px', minHeight: '85vh', padding: '10px 30px' }}
+                        sx={{ border: 'none', borderRadius: '20px', minHeight: '85vh', padding: '10px 8px' }}
                     >
                         <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                             <h1>{titleText ? titleText : 'MainModal'}</h1>

@@ -25,7 +25,7 @@ export const mediaService = createApi({
     getMediaData: builder.query({
       providesTags: ["media"],
       query: (id) => ({
-        url: `${API_GET_MEDIA_BY_ID}?media_type=${id.media}&page=${id.page}&page_size=15`,
+        url: `${API_GET_MEDIA_BY_ID}?media_type=${id.media}&page=${id.page}&page_size=${id.pageSize}`,
         method: "GET",
       }),
     }),
