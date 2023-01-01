@@ -13,11 +13,13 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import { useGetMediaDataQuery } from "../../reduxToolKit/media/mediaService";
 import { useSelector } from "react-redux";
 import Audio from "../../services/images/audio.jpg";
+import Draggable from "react-draggable";
 
 export default function Playlist() {
   const [open, setOpen] = React.useState(false);
   const [page, setPage] = React.useState(1);
   const { mediaType } = useSelector((state) => state.mediaSlice);
+  const [selectedMediaList, setSelectedMediaList] = React.useState([]);
   console.log("mediaType sff", mediaType);
   let media =
     mediaType == "images"
@@ -85,6 +87,14 @@ export default function Playlist() {
     setOpen(true);
   };
 
+  // const selectedMediaListData = [];
+  const selectedMediaHandle = (item) => {
+    console.log("item", item);
+    setSelectedMediaList([...selectedMediaList, item]);
+    // selectedMediaListData.push(item)
+    // console.log("selectedMediaListData", selectedMediaListData.length);
+  };
+
   let countries = [
     "Bangladesh",
     "Bhutan",
@@ -117,6 +127,7 @@ export default function Playlist() {
                   lg={3}
                   xl={2}
                   className="playlistImgWrap"
+                  onClick={() => selectedMediaHandle(item)}
                 >
                   <img
                     src={item?.path}
@@ -155,10 +166,11 @@ export default function Playlist() {
                 >
                   <Box sx={{ height: "70px", width: "110px" }}>
                     <video
-                    height='70px'
-                    width='110px'
+                      height="70px"
+                      width="110px"
                       controls="controls"
                       preload="metadata"
+                      onClick={() => selectedMediaHandle(item)}
                     >
                       <source src={item?.path + "#t=0.5"} type="video/mp4" />
                     </video>
@@ -179,8 +191,8 @@ export default function Playlist() {
           columnSpacing={{ xs: 1, sm: 2, md: 3 }}
           className="createPlayListImgParent"
         >
-          {[...Array(data && data?.data?.data?.length).keys()]?.map(
-            (item, i) => {
+          {data &&
+            data?.data?.data?.map((item, i) => {
               return (
                 <Grid
                   item
@@ -190,6 +202,7 @@ export default function Playlist() {
                   lg={3}
                   xl={2}
                   className="playlistImgWrap"
+                  onClick={() => selectedMediaHandle(item)}
                 >
                   <img
                     src={Audio}
@@ -205,8 +218,7 @@ export default function Playlist() {
                   />
                 </Grid>
               );
-            }
-          )}
+            })}
         </Grid>
       ),
     },
@@ -227,6 +239,11 @@ export default function Playlist() {
   };
   const changeHandler = (e) => {
     console.log(e);
+  };
+  const deleteHandler = (data) => {
+    setSelectedMediaList(
+      selectedMediaList.filter((item) => item.path !== data.path)
+    );
   };
   return (
     <div>
@@ -293,127 +310,95 @@ export default function Playlist() {
           </Grid>
           <Grid item xs={12} md={7} lg={5} xl={5} className="">
             <Box sx={{ paddingTop: "0px" }}>Preview</Box>
+
             <Box className="fullWidthGrayBox">
-              <Box sx={{ width: "100%", paddingTop: "30px" }}>
-                <Typography>Image</Typography>
-                <Box
-                  sx={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    alignItems: "center",
-                    width: "100%",
-                  }}
-                >
-                  <Box
-                    sx={{
-                      border: "1px solid rgba(0, 0, 0, 0.24)",
-                      padding: "20px",
-                      borderRadius: "10px",
-                      background: "#fff",
-                    }}
-                  >
-                    <Box>Image Preview</Box>
-                  </Box>
 
-                  <Box
-                    sx={{
-                      background: "#fff",
-                      padding: "5px 45px",
-                      borderRadius: "10px",
-                      display: "flex",
-                      justifyContent: "center",
-                      boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px",
-                    }}
-                  >
-                    <Box>00:30</Box>
-                  </Box>
-                  <Box>
-                    <Box>
-                      <DeleteIcon />
-                    </Box>
-                  </Box>
-                </Box>
-              </Box>
-              <Box sx={{ width: "100%", padding: "10px 0px" }}>
-                <Typography>Video</Typography>
-                <Box
-                  sx={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    alignItems: "center",
-                    width: "100%",
-                  }}
-                >
-                  <Box
-                    sx={{
-                      border: "1px solid rgba(0, 0, 0, 0.24)",
-                      padding: "20px",
-                      borderRadius: "10px",
-                      background: "#fff",
-                    }}
-                  >
-                    <Box>Video Preview</Box>
-                  </Box>
+                  {selectedMediaList.map((item, i) => {
+                    console.log("item.media_type", item);
+                    return (
+                      <Draggable grid={[10, 10]} axis='y' bounds='parent'>
+                      <Box sx={{ width: "100%", paddingTop: "30px" }}>
+                        <Typography>
+                          {item.media_type == 1
+                            ? "Image"
+                            : item.media_type == 2
+                            ? "Audio"
+                            : item.media_type == 3
+                            ? "Video"
+                            : ""}
+                        </Typography>
+                        <Box
+                          sx={{
+                            display: "flex",
+                            justifyContent: "space-between",
+                            alignItems: "center",
+                            width: "100%",
+                          }}
+                        >
+                          <Box
+                            sx={{
+                              border: "1px solid rgba(0, 0, 0, 0.24)",
+                              // padding: "20px",
+                              borderRadius: "10px",
+                              background: "#fff",
+                            }}
+                          >
+                            <Box>
+                              {(item.media_type == 1 ||
+                                item.media_type == 2) && (
+                                <img
+                                  src={
+                                    item.media_type === 1 ? item?.path : Audio
+                                  }
+                                  alt=""
+                                  style={{
+                                    height: "70px",
+                                    width: "110px",
+                                    borderRadius: "10px",
+                                  }}
+                                />
+                              )}
+                              {item.media_type === 3 && (
+                                <Box sx={{ height: "70px", width: "110px" }}>
+                                  <video
+                                    height="70px"
+                                    width="110px"
+                                    controls="controls"
+                                    preload="metadata"
+                                    onClick={() => selectedMediaHandle(item)}
+                                  >
+                                    <source
+                                      src={item?.path + "#t=0.5"}
+                                      type="video/mp4"
+                                    />
+                                  </video>
+                                </Box>
+                              )}
+                            </Box>
+                          </Box>
 
-                  <Box
-                    sx={{
-                      background: "#fff",
-                      padding: "5px 45px",
-                      borderRadius: "10px",
-                      display: "flex",
-                      justifyContent: "center",
-                      boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px",
-                    }}
-                  >
-                    <Box>00:30</Box>
-                  </Box>
-                  <Box>
-                    <Box>
-                      <DeleteIcon />
-                    </Box>
-                  </Box>
-                </Box>
-              </Box>
-              <Box sx={{ width: "100%" }}>
-                <Typography>Document</Typography>
-                <Box
-                  sx={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    alignItems: "center",
-                    width: "100%",
-                  }}
-                >
-                  <Box
-                    sx={{
-                      border: "1px solid rgba(0, 0, 0, 0.24)",
-                      padding: "20px",
-                      borderRadius: "10px",
-                      background: "#fff",
-                    }}
-                  >
-                    <Box>Document Preview</Box>
-                  </Box>
-
-                  <Box
-                    sx={{
-                      background: "#fff",
-                      padding: "5px 45px",
-                      borderRadius: "10px",
-                      display: "flex",
-                      justifyContent: "center",
-                      boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px",
-                    }}
-                  >
-                    <Box>00:30</Box>
-                  </Box>
-                  <Box>
-                    <Box>
-                      <DeleteIcon />
-                    </Box>
-                  </Box>
-                </Box>
-              </Box>
+                          <Box
+                            sx={{
+                              background: "#fff",
+                              padding: "5px 45px",
+                              borderRadius: "10px",
+                              display: "flex",
+                              justifyContent: "center",
+                              boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px",
+                            }}
+                          >
+                            <Box>00:30</Box>
+                          </Box>
+                          <Box>
+                            <Box onClick={() => deleteHandler(item)}>
+                              <DeleteIcon />
+                            </Box>
+                          </Box>
+                        </Box>
+                      </Box>
+              </Draggable>
+                    );
+                  })}
 
               {/* <p>Drag and Drop asset from the right or playlist from the left to here!</p> */}
             </Box>
