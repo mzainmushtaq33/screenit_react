@@ -11,7 +11,7 @@ export default function CustomTab({
   destroyInactiveTabPane = false,
   style
 }) {
-  console.log('styles', style)
+  // console.log('styles', style)
   const dispatch = useDispatch()
   let [activeKey, setActiveKey] = useState(
     defaultActiveKey ? defaultActiveKey : tabArray[0]?.key

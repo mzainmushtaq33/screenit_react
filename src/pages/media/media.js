@@ -185,11 +185,11 @@ export default function Media() {
          async (err, data) => {
           setLoading(false);
           if (err) {
-            console.error("Error uploading file:", err);
+            // console.error("Error uploading file:", err);
             ToastMessage(false, "Error uploading file:");
           } else {
             setFiles([]);
-            console.log("Successfully uploaded file:", data);
+            // console.log("Successfully uploaded file:", data);
             ToastMessage(
               true,
               `Successfully uploaded file:${data && data?.key}`
@@ -212,13 +212,13 @@ export default function Media() {
             if(dataMedia?.data?.success){
               setOpen(false)
             }
-            console.log('dataMedia', dataMedia)
+            // console.log('dataMedia', dataMedia)
           }
         }
       );
     });
   };
-  console.log("mediaValue :>> ", mediaValue);
+  // console.log("mediaValue :>> ", mediaValue);
   let tabVal = [
     {
       name: "Images",

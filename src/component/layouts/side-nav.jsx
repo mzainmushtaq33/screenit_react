@@ -9,7 +9,7 @@ import './layouts.scss';
 export const navItem = [
     { title: '', name: '', icon: dashboard_v1, url: slug.DASHBOARD, logo: true },
     // { title: '', name: 'Test', icon: dashboard_v1, url: slug.TEST, disabled: false },
-    { title: '', name: 'Dashboard', icon: dashboard_v1, url: slug.DASHBOARD, },
+    { title: '', name: 'Dashboard', icon: dashboard_v1, url: '/', },
     { title: '', name: 'Screen', icon: screen_v1, url: slug.SCREENS, url2: slug.ADD_SCREEN },
     { title: '', name: 'Media', icon: media_v1, url: slug.MEDIA },
     { title: '', name: 'Templates', icon: templates_v1, url: slug.TEMPLATES, url2: slug.ADD_TEMPLATE, url3: slug.SEL_TEMPLATE },

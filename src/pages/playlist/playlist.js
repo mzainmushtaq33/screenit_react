@@ -20,7 +20,7 @@ export default function Playlist() {
   const [page, setPage] = React.useState(1);
   const { mediaType } = useSelector((state) => state.mediaSlice);
   const [selectedMediaList, setSelectedMediaList] = React.useState([]);
-  console.log("mediaType sff", mediaType);
+  // console.log("mediaType sff", mediaType);
   let media =
     mediaType == "images"
       ? 1
@@ -31,7 +31,7 @@ export default function Playlist() {
       : mediaType == "documents"
       ? 4
       : 1;
-  console.log("media", media);
+  // console.log("media", media);
   const pageSize = 8;
   const {
     data = [],
@@ -39,7 +39,7 @@ export default function Playlist() {
     isFetching,
   } = useGetMediaDataQuery({ media, pageSize });
 
-  console.log("data daddkkdk", data);
+  // console.log("data daddkkdk", data);
 
   React.useEffect(() => {
     setPage(1);
@@ -89,7 +89,7 @@ export default function Playlist() {
 
   // const selectedMediaListData = [];
   const selectedMediaHandle = (item) => {
-    console.log("item", item);
+    // console.log("item", item);
     setSelectedMediaList([...selectedMediaList, item]);
     // selectedMediaListData.push(item)
     // console.log("selectedMediaListData", selectedMediaListData.length);
@@ -153,7 +153,7 @@ export default function Playlist() {
         >
           {data &&
             data?.data?.data?.map((item, i) => {
-              console.log("item", item);
+              // console.log("item", item);
               return (
                 <Grid
                   item
@@ -235,10 +235,10 @@ export default function Playlist() {
   ];
 
   const nextPrevHandler = (e) => {
-    console.log(e);
+    // console.log(e);
   };
   const changeHandler = (e) => {
-    console.log(e);
+    // console.log(e);
   };
   const deleteHandler = (data) => {
     setSelectedMediaList(
@@ -314,7 +314,7 @@ export default function Playlist() {
             <Box className="fullWidthGrayBox">
 
                   {selectedMediaList.map((item, i) => {
-                    console.log("item.media_type", item);
+                    // console.log("item.media_type", item);
                     return (
                       <Draggable grid={[10, 10]} axis='y' bounds='parent'>
                       <Box sx={{ width: "100%", paddingTop: "30px" }}>

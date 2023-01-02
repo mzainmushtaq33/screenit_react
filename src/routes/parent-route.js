@@ -6,10 +6,12 @@ import config from './config';
 // routes
 
 // ==============================|| ROUTING RENDER ||============================== //
-export const userInfo = JSON.parse(localStorage.getItem('screenItOnInfo'));
 
+export const userInfo = JSON.parse(localStorage.getItem('screenItOnInfo'));
 const ParentRoute = () => {
-    return useRoutes([AuthRoutes, userInfo?.token ? MainRoutes : []], config.basename);
+const userInfoData = JSON.parse(localStorage.getItem('screenItOnInfo'));
+
+    return useRoutes([userInfoData?.token ? MainRoutes : [],!userInfoData?.token && AuthRoutes, ], config.basename);
 };
 
 export default ParentRoute;

@@ -11,7 +11,7 @@ export default function VideoUpload(props) {
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
-    console.log('file :>> ', file);
+    // console.log('file :>> ', file);
     const url = URL.createObjectURL(file);
     setSource(url);
     // onChange([file])

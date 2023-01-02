@@ -6,7 +6,7 @@ import VideoUpload from "../../component/ui-components/videoUpload/VideoUpload";
 const ImageFile = ({mediaName,setFiles}) => {
   // console.log('mediaName', mediaName)
   const checkFiles = (e) => {
-    console.log("e images:>> dfdf ", e);
+    // console.log("e images:>> dfdf ", e);
     setFiles(e)
   };
   return (

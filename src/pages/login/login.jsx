@@ -46,7 +46,7 @@ const Login = () => {
    
         if (response?.data?.success ) {
             localStorage.setItem("screenItOnInfo", JSON.stringify(response?.data?.data));
-            navigate(`${DASHBOARD}`)
+            navigate( '/'|| `${DASHBOARD}`)
         }
     }
 
