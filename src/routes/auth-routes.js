@@ -10,7 +10,7 @@ const SignUp = Loadable(lazy(() => import('../pages/login/sign-up.jsx')));
 const ForgotPass = Loadable(lazy(() => import('../pages/login/forgot-pass.jsx')));
 
 // ==============================|| AUTHENTICATION ROUTING ||============================== //
-
+console.log('authd')
 const AuthRoutes = {
     path: '/',
     element: <MinimalLayout />,

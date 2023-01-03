@@ -13,7 +13,7 @@ const ForgotPass = () => {
     const navigate = useNavigate();
 
     const handleSubmitValue = (e) => {
-        console.log(e);
+        // console.log(e);
 
     }
     const loginNav = () => {

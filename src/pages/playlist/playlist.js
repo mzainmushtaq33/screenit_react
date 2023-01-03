@@ -5,12 +5,46 @@ import SelectComponent from "../../component/ui-components/formComponents/select
 import FullScreenModal from "../../component/ui-components/main-modals/full-screen-modal";
 import CustomTab from "../../component/ui-components/tab/tab";
 import { Box, Grid } from "@mui/material";
-import img01 from '../../services/images/New folder/Screenshot_1.png';
+import img01 from "../../services/images/New folder/Screenshot_1.png";
 import { next_v1, prev_v1 } from "../../services/svg/svg-icon";
 import MainButton from "../../component/ui-components/main-buttons/main-button";
+import { Typography } from "antd";
+import DeleteIcon from "@mui/icons-material/Delete";
+import { useGetMediaDataQuery } from "../../reduxToolKit/media/mediaService";
+import { useSelector } from "react-redux";
+import Audio from "../../services/images/audio.jpg";
+import Draggable from "react-draggable";
 
 export default function Playlist() {
   const [open, setOpen] = React.useState(false);
+  const [page, setPage] = React.useState(1);
+  const { mediaType } = useSelector((state) => state.mediaSlice);
+  const [selectedMediaList, setSelectedMediaList] = React.useState([]);
+  // console.log("mediaType sff", mediaType);
+  let media =
+    mediaType == "images"
+      ? 1
+      : mediaType == "audio"
+      ? 2
+      : mediaType == "videos"
+      ? 3
+      : mediaType == "documents"
+      ? 4
+      : 1;
+  // console.log("media", media);
+  const pageSize = 8;
+  const {
+    data = [],
+    isLoading,
+    isFetching,
+  } = useGetMediaDataQuery({ media, pageSize });
+
+  // console.log("data daddkkdk", data);
+
+  React.useEffect(() => {
+    setPage(1);
+  }, [mediaType]);
+
   const headers = [
     { title: "S.No", dataIndex: "serialNo" },
     { title: "Item Name", dataIndex: "itemName" },
@@ -51,7 +85,15 @@ export default function Playlist() {
 
   const addPlaylist = () => {
     setOpen(true);
-  }
+  };
+
+  // const selectedMediaListData = [];
+  const selectedMediaHandle = (item) => {
+    // console.log("item", item);
+    setSelectedMediaList([...selectedMediaList, item]);
+    // selectedMediaListData.push(item)
+    // console.log("selectedMediaListData", selectedMediaListData.length);
+  };
 
   let countries = [
     "Bangladesh",
@@ -67,57 +109,141 @@ export default function Playlist() {
     {
       name: "Images",
       key: "images",
-      component:
-        <Grid container rowSpacing={0} columnSpacing={{ xs: 1, sm: 2, md: 3 }} className='createPlayListImgParent'>
-          <Grid item xs={12} md={6} lg={6} xl={4} className='playlistImgWrap'>
-            <img src={img01} alt="" />
-          </Grid>
-          <Grid item xs={12} md={6} lg={6} xl={4} className='playlistImgWrap'>
-            <img src={img01} alt="" />
-          </Grid>
-          <Grid item xs={12} md={6} lg={6} xl={4} className='playlistImgWrap'>
-            <img src={img01} alt="" />
-          </Grid>
-          <Grid item xs={12} md={6} lg={6} xl={4} className='playlistImgWrap'>
-            <img src={img01} alt="" />
-          </Grid>
-          <Grid item xs={12} md={6} lg={6} xl={4} className='playlistImgWrap'>
-            <img src={img01} alt="" />
-          </Grid>
-          <Grid item xs={12} md={6} lg={6} xl={4} className='playlistImgWrap'>
-            <img src={img01} alt="" />
-          </Grid>
+      component: (
+        <Grid
+          container
+          rowSpacing={0}
+          columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+          className="createPlayListImgParent"
+        >
+          {data &&
+            data?.data?.data?.map((item, i) => {
+              return (
+                <Grid
+                  item
+                  key={i}
+                  xs={12}
+                  md={6}
+                  lg={3}
+                  xl={2}
+                  className="playlistImgWrap"
+                  onClick={() => selectedMediaHandle(item)}
+                >
+                  <img
+                    src={item?.path}
+                    alt=""
+                    style={{ height: "70px", width: "110px" }}
+                  />
+                </Grid>
+              );
+            })}
         </Grid>
-      ,
+      ),
     },
+    // [...Array(8).keys()]
     {
       name: "Videos",
       key: "videos",
-      component: null,
+      component: (
+        <Grid
+          container
+          rowSpacing={0}
+          columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+          className="createPlayListImgParent"
+        >
+          {data &&
+            data?.data?.data?.map((item, i) => {
+              // console.log("item", item);
+              return (
+                <Grid
+                  item
+                  key={i}
+                  xs={12}
+                  md={6}
+                  lg={3}
+                  xl={2}
+                  className="playlistImgWrap"
+                >
+                  <Box sx={{ height: "70px", width: "110px" }}>
+                    <video
+                      height="70px"
+                      width="110px"
+                      controls="controls"
+                      preload="metadata"
+                      onClick={() => selectedMediaHandle(item)}
+                    >
+                      <source src={item?.path + "#t=0.5"} type="video/mp4" />
+                    </video>
+                  </Box>
+                </Grid>
+              );
+            })}
+        </Grid>
+      ),
     },
     {
       name: "Audio",
       key: "audio",
-      component: null,
+      component: (
+        <Grid
+          container
+          rowSpacing={0}
+          columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+          className="createPlayListImgParent"
+        >
+          {data &&
+            data?.data?.data?.map((item, i) => {
+              return (
+                <Grid
+                  item
+                  key={i}
+                  xs={12}
+                  md={6}
+                  lg={3}
+                  xl={2}
+                  className="playlistImgWrap"
+                  onClick={() => selectedMediaHandle(item)}
+                >
+                  <img
+                    src={Audio}
+                    alt=""
+                    // width={"100%"}
+                    // height={height}
+                    // style={{
+                    //   borderRadius: "20px",
+                    //   minHeight: "250px",
+                    //   objectFit: "cover",
+                    // }}
+                    style={{ height: "70px", width: "110px" }}
+                  />
+                </Grid>
+              );
+            })}
+        </Grid>
+      ),
     },
-    {
-      name: "Document",
-      key: "documents",
-      component: null,
-    },
-    {
-      name: <span>Web&nbsp;Page</span>,
-      key: "webpages",
-      component: null,
-    },
-
+    // {
+    //   name: "Documents",
+    //   key: "documents",
+    //   component: null,
+    // },
+    // {
+    //   name: <span>Web&nbsp;Page</span>,
+    //   key: "webpages",
+    //   component: null,
+    // },
   ];
 
   const nextPrevHandler = (e) => {
-    console.log(e);
+    // console.log(e);
   };
   const changeHandler = (e) => {
-    console.log(e);
+    // console.log(e);
+  };
+  const deleteHandler = (data) => {
+    setSelectedMediaList(
+      selectedMediaList.filter((item) => item.path !== data.path)
+    );
   };
   return (
     <div>
@@ -137,41 +263,172 @@ export default function Playlist() {
         setOpen={setOpen}
         titleText="Create Playlist"
       >
-        <Grid container rowSpacing={0} columnSpacing={{ xs: 1, sm: 2, md: 3 }} sx={{ margin: '30px 0' }}>
-          <Grid item xs={12} md={5} lg={5} xl={5} className="">
-            <InputComponent label="Playlist Name" placeholder="Admin" required className='marginBtm' />
-            <Grid container rowSpacing={0} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
-              <Grid item xs={12} md={6} lg={6} xl={6} className="">
-                <SelectComponent items={countries} onChange={changeHandler} label="Total Size" />
-              </Grid>
-              <Grid item xs={12} md={6} lg={6} xl={6} className="">
+        <Grid
+          container
+          rowSpacing={0}
+          columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+          sx={{ margin: "0px 0px 50px 0px" }}
+        >
+          <Grid item xs={12} md={5} lg={7} xl={7} className="">
+            <Box sx={{ display: "flex" }}>
+              <Box sx={{ width: "100%" }}>
+                <InputComponent
+                  label="Playlist Name"
+                  placeholder="Admin"
+                  required
+                  className="marginBtm"
+                  labelStyle="playlist-input-label"
+                />
+              </Box>
+              <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+              {/* <Grid container rowSpacing={0} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
+              <Grid item xs={12} md={6} lg={6} xl={7} className=""> */}
+              <Box sx={{ width: "100%" }}>
+                <SelectComponent
+                  items={countries}
+                  onChange={changeHandler}
+                  label="Total Size"
+                  labelStyle="playlist-input-label"
+                />
+              </Box>
+              {/* </Grid> */}
+              {/* <Grid item xs={12} md={6} lg={6} xl={6} className="">
                 <SelectComponent items={countries} onChange={changeHandler} label="Total time" />
-              </Grid>
-            </Grid>
+              </Grid> */}
+              {/* </Grid> */}
+            </Box>
+            <Box>
+              <Typography>Media Type</Typography>
+            </Box>
             <div>
-              <CustomTab tabArray={tabArray} defaultActiveKey="images" />
+              <CustomTab
+                tabArray={tabArray}
+                defaultActiveKey="images"
+                style={{ fontSize: "12px", marginRight: "45px" }}
+              />
             </div>
           </Grid>
-          <Grid item xs={12} md={7} lg={7} xl={7} className="">
+          <Grid item xs={12} md={7} lg={5} xl={5} className="">
+            <Box sx={{ paddingTop: "0px" }}>Preview</Box>
+
             <Box className="fullWidthGrayBox">
-              <p>Drag and Drop asset from the right or playlist from the left to here!</p>
+
+                  {selectedMediaList.map((item, i) => {
+                    // console.log("item.media_type", item);
+                    return (
+                      <Draggable grid={[10, 10]} axis='y' bounds='parent'>
+                      <Box sx={{ width: "100%", paddingTop: "30px" }}>
+                        <Typography>
+                          {item.media_type == 1
+                            ? "Image"
+                            : item.media_type == 2
+                            ? "Audio"
+                            : item.media_type == 3
+                            ? "Video"
+                            : ""}
+                        </Typography>
+                        <Box
+                          sx={{
+                            display: "flex",
+                            justifyContent: "space-between",
+                            alignItems: "center",
+                            width: "100%",
+                          }}
+                        >
+                          <Box
+                            sx={{
+                              border: "1px solid rgba(0, 0, 0, 0.24)",
+                              // padding: "20px",
+                              borderRadius: "10px",
+                              background: "#fff",
+                            }}
+                          >
+                            <Box>
+                              {(item.media_type == 1 ||
+                                item.media_type == 2) && (
+                                <img
+                                  src={
+                                    item.media_type === 1 ? item?.path : Audio
+                                  }
+                                  alt=""
+                                  style={{
+                                    height: "70px",
+                                    width: "110px",
+                                    borderRadius: "10px",
+                                  }}
+                                />
+                              )}
+                              {item.media_type === 3 && (
+                                <Box sx={{ height: "70px", width: "110px" }}>
+                                  <video
+                                    height="70px"
+                                    width="110px"
+                                    controls="controls"
+                                    preload="metadata"
+                                    onClick={() => selectedMediaHandle(item)}
+                                  >
+                                    <source
+                                      src={item?.path + "#t=0.5"}
+                                      type="video/mp4"
+                                    />
+                                  </video>
+                                </Box>
+                              )}
+                            </Box>
+                          </Box>
+
+                          <Box
+                            sx={{
+                              background: "#fff",
+                              padding: "5px 45px",
+                              borderRadius: "10px",
+                              display: "flex",
+                              justifyContent: "center",
+                              boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px",
+                            }}
+                          >
+                            <Box>00:30</Box>
+                          </Box>
+                          <Box>
+                            <Box onClick={() => deleteHandler(item)}>
+                              <DeleteIcon />
+                            </Box>
+                          </Box>
+                        </Box>
+                      </Box>
+              </Draggable>
+                    );
+                  })}
+
+              {/* <p>Drag and Drop asset from the right or playlist from the left to here!</p> */}
             </Box>
           </Grid>
         </Grid>
-        <div className='modalFooter'>
-          <div className='pagination'>
+        <div className="modalFooter">
+          <div className="pagination">
             <span className="cmn_prev_next prev_btn">
               {prev_v1} <b>Prev</b>
             </span>
-            <b className='curPage'>1</b>
+            <b className="curPage">1</b>
             <span className="cmn_prev_next next_btn">
               <b>Next</b> {next_v1}
             </span>
           </div>
-          <div className='btnGrp'>
-            <MainButton clickHandler={() => nextPrevHandler('cancel')} icon="" btnText="Cancel" variant="outlinedDark" disabled />
+          <div className="btnGrp">
+            <MainButton
+              clickHandler={() => nextPrevHandler("cancel")}
+              icon=""
+              btnText="Cancel"
+              variant="outlinedDark"
+              disabled
+            />
             <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-            <MainButton clickHandler={() => nextPrevHandler('next')} icon="" btnText="Next" variant="" />
+            <MainButton
+              clickHandler={() => nextPrevHandler("next")}
+              icon=""
+              btnText="Submit"
+              variant=""
+            />
           </div>
         </div>
       </FullScreenModal>

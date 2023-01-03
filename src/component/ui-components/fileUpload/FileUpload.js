@@ -33,7 +33,7 @@ const MultiImageUpload = ({
   const dispatch = useDispatch();
   const handleChange = (e) => {
     const Files = [e.target.files];
-    console.log("Files in", Files);
+    // console.log("Files in", Files);
     const FILES = [];
     Files.map((fileList, ind) => {
       const getArray = Object.values(fileList);
@@ -86,7 +86,7 @@ const MultiImageUpload = ({
       [...files, ...FILES].length > maxFiles
         ? [...files, ...FILES].slice(0, maxFiles)
         : [...files, ...FILES];
-    console.log("previews", previews);
+    // console.log("previews", previews);
     const urlsArray = [];
     previews?.length > 0 &&
       previews.map((file) => {
@@ -99,10 +99,10 @@ const MultiImageUpload = ({
         });
         //
       });
-    console.log("urlsArray", urlsArray);
+    // console.log("urlsArray", urlsArray);
     if (urlsArray.length + defaultImages.length > maxFiles) {
       let slicedUrls = urlsArray.slice(0, maxFiles - DefaultImgs.length);
-      console.log("slicedUrls", slicedUrls);
+      // console.log("slicedUrls", slicedUrls);
 
       setPreviewsArray([...DefaultImgs, ...slicedUrls]);
     } else {
@@ -116,7 +116,7 @@ const MultiImageUpload = ({
         : [...files, ...FILES]
     );
   };
-  console.log("previewsArray", previewsArray);
+  // console.log("previewsArray", previewsArray);
   const handleClick = (e) => {
     ref.current.click();
   };

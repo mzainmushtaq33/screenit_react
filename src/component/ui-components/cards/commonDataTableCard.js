@@ -21,7 +21,7 @@ export default function CardItem({
   checkboxClickHandler = () => {},
   showActions = true,
 }) {
-  console.log("loadingState", loadingState);
+  // console.log("loadingState", loadingState);
   return (
     <>
       {gridItem && (
@@ -96,7 +96,7 @@ export default function CardItem({
 }
 
 function CardImg({ src, height = "auto", data }) {
-  console.log("data ", data);
+  // console.log("data ", data);
 
   return (
     <>

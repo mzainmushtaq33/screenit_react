@@ -13,7 +13,7 @@ export default function AudioUpload(props) {
   const handleFileChange = (event) => {
     const file = event.target.files[0];
     const url = URL.createObjectURL(file);
-    console.log('file,url :>> ', file);
+    // console.log('file,url :>> ', file);
     setSource(url);
     let sizeInKb = file.size /1000 
     const totalSizeInKb = 10*1024;

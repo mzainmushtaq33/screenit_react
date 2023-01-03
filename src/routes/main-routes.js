@@ -3,6 +3,7 @@ import Layouts from "../component/layouts/layouts.jsx";
 import Loadable from "../component/ui-components/loading/loadable.jsx";
 import Users from "../pages/account/users.jsx";
 import Help from "../pages/help/help.js";
+import NotFound from "../pages/not-found/not-found.jsx";
 import Schedules from "../pages/schedule/schedule.js";
 import Templates from "../pages/templates/template.js";
 import Widgets from "../pages/widgets/widgets.js";
@@ -36,6 +37,8 @@ const TestAbu = Loadable(lazy(() => import("../pages/test/testAbu.jsx")));
 const Account = Loadable(lazy(() => import("../pages/account/account.jsx")));
 const Profile = Loadable(lazy(() => import("../pages/account/profile.jsx")));
 
+console.log('main')
+
 const MainRoutes = {
   path: "/",
   element: <Layouts />,
@@ -47,6 +50,10 @@ const MainRoutes = {
     {
       path: "/testAbu",
       element: <TestAbu />,
+    },
+    {
+      path: slug.HOME,
+      element: <Dashboard />,
     },
     {
       path: slug.DASHBOARD,

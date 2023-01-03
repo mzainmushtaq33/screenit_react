@@ -9,7 +9,9 @@ export default function CustomTab({
   tabArray,
   defaultActiveKey,
   destroyInactiveTabPane = false,
+  style
 }) {
+  // console.log('styles', style)
   const dispatch = useDispatch()
   let [activeKey, setActiveKey] = useState(
     defaultActiveKey ? defaultActiveKey : tabArray[0]?.key
@@ -48,6 +50,7 @@ export default function CustomTab({
                   key={index}
                   className={`custom_tab_bar ${activeKey === tab.key ? "selected_custom_tab_bar" : ""
                     }`}
+                    style={style}
                   onClick={() => {setActiveKey(tab.key); dispatch(getSelectedMedia(tab.key))}}
                 >
                   {tab.name}
